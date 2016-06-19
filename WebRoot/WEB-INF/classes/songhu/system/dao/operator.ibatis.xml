@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Operator">
+    <resultMap id="operatorResult" class="songhu.system.pojo.Operator">
+        <result column="DM_CZY" property="dmCzy" />
+        <result column="XM_CZY" property="xmCzy" />
+        <result column="DM_BM" property="dmBm" />
+        <result column="BMMC" property="bmmc" />
+        <result column="KL" property="kl" />
+        <result column="LXDH" property="lxdh" />
+        <result column="SQ" property="sq" />
+    </resultMap>
+    <!-- 初始化显示表格信息，并进行相关条件的查询 -->
+    <select id="find" resultMap="operatorResult" parameterClass="songhu.system.pojo.Operator">
+		select a.DM_CZY, a.XM_CZY, a.DM_BM, b.deptname BMMC, '' KL, a.LXDH,
+	       (select count(1) from G_CZRYGW c where c.DM_CZY=a.DM_CZY) SQ
+	          from G_CZRY a LEFT JOIN
+				   G_DEPART b ON a.dm_bm = b.deptid
+		  where 1=1
+		  <isNotEmpty prepend="and" property="dmCzy">
+			a.DM_CZY  = #dmCzy#
+		  </isNotEmpty>
+		  <isNotEmpty prepend="and" property="xmCzy">
+			a.XM_CZY  like '%$xmCzy$%'
+		  </isNotEmpty>
+		  <isNotEmpty prepend="and" property="dmBm">       
+        	a.DM_BM =  #dmBm# 
+		  </isNotEmpty>
+		  order by a.DM_CZY
+	</select>
+	<!-- 插入 -->
+    <insert id="insert" parameterClass="songhu.system.pojo.Operator">
+        insert into G_CZRY (DM_CZY, XM_CZY, DM_BM, KL, LXDH)
+        values (#dmCzy#, #xmCzy#, #dmBm#, #kl#, #lxdh#)
+    </insert>
+    <!-- 检查插入是否有已存在 -->
+    <select id="checkDm" resultClass="java.lang.String" parameterClass="songhu.system.pojo.Operator">
+        select a.DM_CZY
+		from G_CZRY a
+        where a.DM_CZY = #dmCzy#
+    </select>
+    
+    <resultMap id="operatorgetResult" class="songhu.system.pojo.Operator">
+        <result column="DM_CZY" property="dmCzy" />
+        <result column="USER_ID" property="userId" />
+        <result column="XM_CZY" property="xmCzy" />
+        <result column="DM_BM" property="dmBm" />
+        <result column="BMMC" property="bmmc" />
+    </resultMap>
+    <!-- 获取 -->
+    <select id="getByPrimaryKey" resultMap="operatorgetResult" parameterClass="java.lang.String">
+        select d.NAME DM_CZY, a.CZRY_MC XM_CZY,a.SWJG_DM DM_BM, b.SWJG_MC BMMC,d.USERID USER_ID
+        from DM_CZRY a,DM_SWJG b,QX_USER d,G_CZRY e
+	    where a.SWJG_DM = b.SWJG_DM(+) 
+        and a.CZRY_DM = d.USERID
+	    and a.CZRY_DM=e.USER_ID 
+		and d.NAME  = #dmCzy#
+    </select>
+    <!-- 修改 -->
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Operator">
+        update g_czry
+        <dynamic prepend="set">
+			<isNotEmpty prepend="," property="xmCzy"> 
+				XM_CZY = #xmCzy#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="dmBm"> 
+				DM_BM = #dmBm#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="kl"> 
+				KL = #kl#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="lxdh"> 
+				LXDH = #lxdh#
+			</isNotEmpty>
+        </dynamic>
+        where DM_CZY = #dmCzy#
+    </update>
+    
+    <!-- 删除 -->
+    <delete id="deleteByPrimaryKey1" parameterClass="java.lang.String">
+				delete from g_czry where DM_CZY = #dmCzy#
+    </delete>
+     <delete id="deleteByPrimaryKey2" parameterClass="java.lang.String">
+     			delete from G_CZRYGW where DM_CZY = #dmCzy#
+      </delete>
+     <resultMap id="userResult" class="com.weixin.core.vo.User">
+        <result column="DM_CZY" property="userId" />
+        <result column="XM_CZY" property="userName" />
+        <result column="DM_BM" property="deptId" />
+        <result column="MC_BM" property="deptName" />
+        <result column="RIGHT_LEVEL" property="rigthLevel" />
+    </resultMap>
+    <!-- 验证登陆账号 -->
+    <select id="checkUserExits" resultMap="userResult" parameterClass="songhu.system.pojo.Operator">
+		  SELECT
+	a.DM_CZY,
+	a.XM_CZY,
+	a.DM_BM,
+	b.deptname MC_BM,
+	(
+		SELECT
+			max(c.LX)
+		FROM
+			G_GW c,
+			G_CZRYGW d
+		WHERE
+			c.DM_GW = d.Dm_GW
+		AND d.dm_czy = a.dm_czy
+	) RIGHT_LEVEL
+FROM
+	G_CZRY a LEFT JOIN
+	G_DEPART b ON a.dm_bm = b.deptid
+WHERE 
+		  	DM_CZY = #dmCzy# 
+		  	and KL = #kl#
+	</select>
+	<!-- 判断账号是否有设置岗位 -->
+	<select id="isSetRole" resultClass="java.lang.String" parameterClass="java.util.Map">
+		  select count(1)
+		  from G_GW
+		  where DM_GW in (select DM_GW from G_CZRYGW t where DM_CZY = #dmCzy#)
+		       and DM_BM =#dmBm#
+	</select>
+</sqlMap>

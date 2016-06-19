@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="gSetting">
+    <resultMap id="gSettingResult" class="songhu.system.pojo.Setting">
+        <result column="PASSWORD" property="password" />
+        <result column="DESCRIPTION" property="description" />
+    </resultMap>
+    <resultMap id="gSettingResultWithBLOBs" class="songhu.system.pojo.Setting" extends="gSetting.gSettingResult">
+        <result column="VALUE" property="value" jdbcType="CLOB" />
+    </resultMap>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Setting">
+        update G_SETTING
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="description">
+                DESCRIPTION = #description#
+            </isNotNull>
+            <isNotNull prepend="," property="value">
+                VALUE = #value#
+            </isNotNull>
+        </dynamic>
+        where PASSWORD = #password#
+    </update>
+    <select id="getByPrimaryKey" resultMap="gSettingResultWithBLOBs" parameterClass="java.lang.String">
+        select PASSWORD, DESCRIPTION, VALUE
+        from G_SETTING
+        where PASSWORD = #password#
+    </select>
+    <!-- 测试页面 -->
+    <!-- 初始化显示表格信息，并进行相关条件的查询 -->
+    <select id="find" resultMap="gSettingResult" parameterClass="songhu.system.pojo.Setting">
+    	select PASSWORD, DESCRIPTION, VALUE
+        from G_SETTING
+        where  1=1
+        <isNotEmpty prepend="and" property="password">
+        PASSWORD = #password#
+        </isNotEmpty>
+    </select>
+</sqlMap>

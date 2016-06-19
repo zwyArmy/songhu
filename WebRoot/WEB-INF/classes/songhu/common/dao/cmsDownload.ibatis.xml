@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cmsDownload">
+    <resultMap id="cmsDownloadResult" class="songhu.common.pojo.CmsDownload">
+        <result column="id" property="id" />
+        <result column="format" property="format" />
+        <result column="mc" property="mc" />
+        <result column="path" property="path" />
+        <result column="scsj" property="scsj" />
+        <result column="scry" property="scry" />
+        <result column="state" property="state" />
+        <result column="audit_time" property="auditTime" />
+        <result column="auditor" property="auditor" />
+    </resultMap>
+    <insert id="insert" parameterClass="songhu.common.pojo.CmsDownload">
+        insert into cms_download (id, format, mc, path, scsj, scry, state, audit_time, auditor)
+        values (LPAD(nextval('SEQ_USER_ID'),20,'0'), #format#, #mc#, #path#, #scsj#, #scry#, #state#, #auditTime#, #auditor#)
+    </insert>
+    <update id="updateByPrimaryKey" parameterClass="songhu.common.pojo.CmsDownload">
+        update cms_download
+        set format = #format#,
+            mc = #mc#,
+            path = #path#,
+            scsj = #scsj#,
+            scry = #scry#,
+            state = #state#,
+            audit_time = #auditTime#,
+            auditor = #auditor#
+        where id = #id#
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.common.pojo.CmsDownload">
+        update cms_download
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="format">
+                format = #format#
+            </isNotNull>
+            <isNotNull prepend="," property="mc">
+                mc = #mc#
+            </isNotNull>
+            <isNotNull prepend="," property="path">
+                path = #path#
+            </isNotNull>
+            <isNotNull prepend="," property="scsj">
+                scsj = #scsj#
+            </isNotNull>
+            <isNotNull prepend="," property="scry">
+                scry = #scry#
+            </isNotNull>
+            <isNotNull prepend="," property="state">
+                state = #state#
+            </isNotNull>
+            <isNotNull prepend="," property="auditTime">
+                audit_time = #auditTime#
+            </isNotNull>
+            <isNotNull prepend="," property="auditor">
+                auditor = #auditor#
+            </isNotNull>
+        </dynamic>
+        where id = #id#
+    </update>
+    <delete id="deleteByPrimaryKey" parameterClass="java.lang.String">
+        delete from cms_download
+        where id = #id#
+    </delete>
+    <select id="getByPrimaryKey" resultMap="cmsDownloadResult" parameterClass="java.lang.String">
+        select id, format, mc, path, scsj, scry, state, audit_time, auditor
+        from cms_download
+        where id = #id#
+    </select>
+    <select id="find" resultMap="cmsDownloadResult" parameterClass="songhu.common.pojo.CmsDownload">
+    	select id, format, mc, path, scsj, scry, state, audit_time, auditor
+        from cms_download
+        where 1=1
+        <isNotEmpty prepend="and" property="mc">
+        mc like concat('%',trim(#mc#),'%')
+        </isNotEmpty>
+        <isNotEmpty prepend="and" property="state">
+        state = #state#
+        </isNotEmpty>
+        <isNotEmpty prepend="and" property="format">
+        format = #format#
+        </isNotEmpty>
+    </select>
+</sqlMap>

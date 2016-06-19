@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="lxfs">
+    <resultMap id="lxfsResult" class="songhu.common.pojo.Lxfs">
+        <result column="id" property="id" />
+        <result column="companyName" property="companyname" />
+        <result column="address" property="address" />
+        <result column="contacts" property="contacts" />
+        <result column="phone" property="phone" />
+        <result column="fax" property="fax" />
+        <result column="email" property="email" />
+        <result column="state" property="state" />
+        <result column="x" property="x" />
+        <result column="y" property="y" />
+    </resultMap>
+    <insert id="insert" parameterClass="songhu.common.pojo.Lxfs">
+        insert into lxfs (id, companyName, address, contacts, phone, fax, email, state, x, y)
+        values (LPAD(nextval('SEQ_CONTACT_ID'),20,'0'), #companyname#, #address#, #contacts#, #phone#, #fax#, #email#, #state#, #x#,
+            #y#)
+    </insert>
+    <update id="update" parameterClass="songhu.common.pojo.Lxfs">
+        update lxfs
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="companyname">
+                companyName = #companyname#
+            </isNotNull>
+            <isNotNull prepend="," property="address">
+                address = #address#
+            </isNotNull>
+            <isNotNull prepend="," property="contacts">
+                contacts = #contacts#
+            </isNotNull>
+            <isNotNull prepend="," property="phone">
+                phone = #phone#
+            </isNotNull>
+            <isNotNull prepend="," property="fax">
+                fax = #fax#
+            </isNotNull>
+            <isNotNull prepend="," property="email">
+                email = #email#
+            </isNotNull>
+            <isNotNull prepend="," property="state">
+                state = #state#
+            </isNotNull>
+            <isNotNull prepend="," property="x">
+                x = #x#
+            </isNotNull>
+            <isNotNull prepend="," property="y">
+                y = #y#
+            </isNotNull>
+        </dynamic>
+        where id = #id#
+    </update>
+    <delete id="delete" parameterClass="java.lang.String">
+        delete from lxfs
+        where id = #id#
+    </delete>
+    <select id="getByPrimaryKey" resultMap="lxfsResult" parameterClass="java.lang.String">
+        select id, companyName, address, contacts, phone, fax, email, state, x, y
+        from lxfs
+        where id = #id#
+    </select>
+    <select id="find" resultMap="lxfsResult" parameterClass="songhu.common.pojo.Lxfs">
+    	select id, companyName, address, contacts, phone, fax, email, state, x, y
+        from lxfs
+        where 1=1
+        <isNotEmpty prepend="and" property="companyname">
+        companyName like concat('%',trim(#companyname#),'%')
+        </isNotEmpty>
+    </select>
+</sqlMap>

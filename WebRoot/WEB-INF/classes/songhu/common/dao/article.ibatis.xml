@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cmsArticle">
+	<resultMap id="cmsArticleResult" class="songhu.common.pojo.Article">
+		<result column="ID" property="id" />
+		<result column="TITLE" property="title" />
+		<result column="AUTHOR" property="author" />
+		<result column="COLUMN_ID" property="columnId" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="PUBLISH_TIME" property="publishTime" />
+		<result column="AUDIT_TIME" property="auditTime" />
+		<result column="CREATOR" property="creator" />
+		<result column="IS_TOP" property="isTop" />
+		<result column="STATE" property="state" />
+		<result column="VIEWS" property="views" />
+		<result column="SUMMARY" property="summary" />
+		<result column="COLUMN_MC" property="columnMc" />
+		<result column="TN_PATH" property="tnPath" />
+		<result column="WORD_PATH" property="wordPath" />
+		<result column="AUDITOR" property="auditor" />
+		<result column="FILENAME" property="filename" />
+	</resultMap>
+	<resultMap id="cmsfindId" class="songhu.common.pojo.Article">
+		<result column="ID" property="id" />
+		<result column="TITLE" property="title" />
+		<result column="PUBLISH_TIME" property="publishTime" />
+		<result column="COLUMN_MC" property="columnMc" />
+	</resultMap>
+	<resultMap id="crumbResult" class="songhu.common.pojo.Crumb">
+		<result column="COLUMN_ID" property="colId" />
+		<result column="COL_NAME" property="colName" />
+		<result column="LINK" property="link" />
+	</resultMap>
+	<resultMap id="cmsArticleResultWithBLOBs" class="songhu.common.pojo.Article"
+		extends="cmsArticle.cmsArticleResult">
+		<result column="CONTENT" property="content" jdbcType="CLOB" />
+	</resultMap>
+	<resultMap id="columnResult" class="songhu.common.pojo.Column">
+		<result column="ID" property="id" />
+		<result column="PARENT_ID" property="parentId" />
+		<result column="COL_NAME" property="colName" />
+		<result column="LINK" property="link" />
+		<result column="DESCRIPTION" property="description" />
+	</resultMap>
+	<resultMap id="verticalResult" class="songhu.common.pojo.Article">
+		<result column="ID" property="id" />
+		<result column="TITLE" property="title" />
+		<result column="AUTHOR" property="author" />
+		<result column="PUBLISH_TIME" property="publishTime" />
+		<result column="SUMMARY" property="summary" />
+		<result column="WORD_PATH" property="wordPath" />
+		<result column="CONTENT" property="content" jdbcType="CLOB" />
+	</resultMap>
+	<insert id="insert" parameterClass="songhu.common.pojo.Article">
+		insert into CMS_ARTICLE (ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME,
+		PUBLISH_TIME, AUDIT_TIME, CREATOR,
+		IS_TOP, STATE, VIEWS, CONTENT, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME)
+		values (CONCAT('ca',nextval('SEQ_ARTICLE_ID')), #title#, #author#,
+		#columnId#, SYSDATE(), #publishTime#, #auditTime#, #creator#,
+		#isTop#, #state#, #views#, #content#, #summary#, #tnPath#, #auditor#,
+		#wordPath#,#filename#)
+	</insert>
+	<insert id="insertSpider" parameterClass="songhu.common.pojo.Article">
+		insert into CMS_ARTICLE (ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME,
+		PUBLISH_TIME, AUDIT_TIME, CREATOR,
+		IS_TOP, STATE, VIEWS, CONTENT, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME)
+		values (CONCAT('c',nextval('SEQ_ARTICLE_ID')), #title#, #author#,
+		#columnId#, SYSDATE(), SYSDATE(), SYSDATE(), 'admin',
+		'1', '1', #views#, #content#, #summary#, #tnPath#, #auditor#,
+		#wordPath#,#filename#)
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterClass="songhu.common.pojo.Article">
+		update CMS_ARTICLE
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="title">
+				TITLE = #title#
+			</isNotNull>
+			<isNotNull prepend="," property="author">
+				AUTHOR = #author#
+			</isNotNull>
+			<isNotNull prepend="," property="columnId">
+				COLUMN_ID = #columnId#
+			</isNotNull>
+			<isNotNull prepend="," property="createTime">
+				CREATE_TIME = #createTime#
+			</isNotNull>
+			<isNotNull prepend="," property="publishTime">
+				PUBLISH_TIME = #publishTime#
+			</isNotNull>
+			<isNotNull prepend="," property="auditTime">
+				AUDIT_TIME = SYSDATE()
+			</isNotNull>
+			<isNotNull prepend="," property="creator">
+				CREATOR = #creator#
+			</isNotNull>
+			<isNotNull prepend="," property="isTop">
+				IS_TOP = #isTop#
+			</isNotNull>
+			<isNotNull prepend="," property="state">
+				STATE = #state#
+			</isNotNull>
+			<isNotNull prepend="," property="views">
+				VIEWS = #views#
+			</isNotNull>
+			<isNotNull prepend="," property="content">
+				CONTENT = #content#
+			</isNotNull>
+			<isNotNull prepend="," property="summary">
+				SUMMARY = #summary#
+			</isNotNull>
+			<isNotNull prepend="," property="tnPath">
+				TN_PATH = #tnPath#
+			</isNotNull>
+			<isNotNull prepend="," property="wordPath">
+				WORD_PATH = #wordPath#
+			</isNotNull>
+			<isNotNull prepend="," property="filename">
+				FILENAME = #filename#
+			</isNotNull>
+			<isNotNull prepend="," property="auditor">
+				AUDITOR = #auditor#
+			</isNotNull>
+		</dynamic>
+		where ID = #id#
+	</update>
+	<delete id="deleteByPrimaryKey" parameterClass="songhu.common.pojo.Article">
+		delete from CMS_ARTICLE
+		where ID = #id#
+	</delete>
+	<select id="getByPrimaryKey" resultMap="cmsArticleResultWithBLOBs"
+		parameterClass="java.lang.String">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME, AUDIT_TIME,
+		CREATOR, IS_TOP, STATE,
+		VIEWS, CONTENT,' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where ID = #id#
+	</select>
+
+	<select id="findByColumnId" resultMap="cmsArticleResult"
+		parameterClass="java.util.Map">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME,
+		AUDIT_TIME, CREATOR, IS_TOP, STATE,
+		VIEWS, ' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where COLUMN_ID in ($columnId$)
+		and STATE = '1'
+		<isNotEmpty prepend="and" property="author">
+			AUTHOR = #author#
+		</isNotEmpty>
+		order by IS_TOP, PUBLISH_TIME desc
+	</select>
+	<select id="findByColumnId2" resultMap="cmsArticleResult"
+		parameterClass="java.util.Map">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME,
+		AUDIT_TIME, CREATOR, IS_TOP, STATE,
+		VIEWS, ' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where COLUMN_ID in ($columnId$)
+		and STATE = '1'
+		<isNotEmpty prepend="and" property="author">
+			AUTHOR = #author#
+		</isNotEmpty>
+		order by IS_TOP, PUBLISH_TIME desc
+		limit 0,50
+	</select>
+
+	<select id="findByColumnId3" resultMap="cmsArticleResult"
+		parameterClass="java.lang.String">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME, AUDIT_TIME,
+		CREATOR, IS_TOP, STATE,
+		VIEWS, ' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where COLUMN_ID = #columnId#
+		order by CREATE_TIME desc
+		limit 0,300
+	</select>
+
+	<select id="findByHot" resultMap="cmsArticleResult"
+		parameterClass="java.util.Map">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME, AUDIT_TIME,
+		CREATOR, IS_TOP, STATE,
+		VIEWS,' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR ,WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where ID != #id# and STATE = '1'
+		order by VIEWS desc ,PUBLISH_TIME desc
+		limit 0,20
+	</select>
+
+	<select id="getCrumb" resultMap="crumbResult" parameterClass="java.lang.String">
+		select a.column_id, b.col_name, b.link
+		from CMS_ARTICLE a, CMS_COLUMN b
+		where a.column_id = b.id
+		and a.id = #id#
+	</select>
+
+	<select id="findWithBLOBs" resultMap="cmsArticleResultWithBLOBs"
+		parameterClass="java.lang.String">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME, AUDIT_TIME,
+		CREATOR, IS_TOP, STATE,
+		VIEWS, CONTENT,' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR, WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where STATE = '1'
+	</select>
+	<select id="findWithBLOBs2" resultMap="cmsArticleResultWithBLOBs"
+		parameterClass="songhu.common.pojo.Article">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME,
+		AUDIT_TIME, CREATOR, IS_TOP, STATE,
+		a.mc COLUMN_MC, VIEWS, CONTENT, SUMMARY, TN_PATH, AUDITOR,
+		WORD_PATH,FILENAME
+		from CMS_ARTICLE t, G_MENU a
+		where t.column_id = a.bh_cd and t.state ='0'
+		<isNotEmpty prepend="and" property="title">
+			t.TITLE like CONCAT('%',#title#,'%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="columnId">
+			t.column_id in (select id from cms_column where parent_id=#columnId# or
+			id=#columnId#)
+		</isNotEmpty>
+	</select>
+	<select id="count" resultClass="String" parameterClass="java.lang.String">
+		select count(*)
+		from CMS_ARTICLE
+		where COLUMN_ID = #columnId# and STATE = '1'
+	</select>
+	<select id="findByVertical5203" resultMap="verticalResult"
+		parameterClass="java.util.ArrayList">
+    	<![CDATA[
+    	select ID, TITLE, AUTHOR, PUBLISH_TIME, CONTENT, WORD_PATH, SUMMARY
+        from CMS_ARTICLE
+        where STATE = '1' and COLUMN_ID = '5203'
+        ]]>
+		<iterate prepend="and(" open="(" close=")" conjunction="or">
+			TITLE like CONCAT('%',#projectIdList[]#, '%')
+		</iterate>
+		<iterate prepend="or" open="(" close=")" conjunction="or">
+			AUTHOR like CONCAT('%',#projectIdList[]#, '%')
+		</iterate>
+		<iterate prepend="or" open="(" close=")" conjunction="or">
+			WORD_PATH like CONCAT('%',#projectIdList[]#, '%')
+		</iterate>
+		<iterate prepend="or" open="(" close=")" conjunction="or">
+			SUMMARY like CONCAT('%',#projectIdList[]#, '%')
+		</iterate>
+		)
+		order by VIEWS desc
+	</select>
+	<select id="countByVertical5203" resultClass="String"
+		parameterClass="java.util.ArrayList">
+    	<![CDATA[
+    	select count(*)
+    	from CMS_ARTICLE
+        where STATE = '1' and COLUMN_ID = '5203'
+        ]]>
+		<iterate prepend="and(" open="(" close=")" conjunction="or">
+			TITLE like CONCAT('%',#projectIdList[]#, '%')
+		</iterate>
+		<iterate prepend="or" open="(" close=")" conjunction="or">
+			AUTHOR like CONCAT('%',#projectIdList[]#, '%')
+		</iterate>
+		<iterate prepend="or" open="(" close=")" conjunction="or">
+			WORD_PATH like CONCAT('%',#projectIdList[]#, '%')
+		</iterate>
+		<iterate prepend="or" open="(" close=")" conjunction="or">
+			SUMMARY like CONCAT('%',#projectIdList[]#, '%')
+		</iterate>
+		)
+	</select>
+	<!-- 测试页面 -->
+	<!-- 初始化显示表格信息，并进行相关条件的查询 -->
+	<select id="find" resultMap="cmsArticleResult" parameterClass="songhu.common.pojo.Article">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME,
+		AUDIT_TIME, CREATOR, IS_TOP, STATE,VIEWS,' ' COLUMN_MC, SUMMARY,
+		TN_PATH, AUDITOR, WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where COLUMN_ID = #columnId#
+		<isNotEmpty prepend="and" property="title">
+			TITLE like CONCAT('%',#title#,'%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="author">
+			AUTHOR = #author#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="id">
+			ID = #id#
+		</isNotEmpty>
+		order by IS_TOP,PUBLISH_TIME desc
+	</select>
+	<delete id="delete" parameterClass="songhu.common.pojo.Article">
+		delete from CMS_ARTICLE
+		where 1=1
+		<isNotEmpty prepend="and" property="id">
+			ID = #id#
+		</isNotEmpty>
+	</delete>
+	<!-- 更多新闻 -->
+	<select id="listMore" resultMap="cmsArticleResult"
+		parameterClass="java.lang.String">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME, AUDIT_TIME,
+		CREATOR, IS_TOP, STATE,VIEWS,' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,
+		WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where column_id in(
+		select column_id from cms_article where id=#id#)
+		and
+		id!=#id#
+		order by publish_time desc limit 0,20
+	</select>
+
+	<select id="listColumnByParent" resultMap="columnResult"
+		parameterClass="java.lang.String">
+		select ID, PARENT_ID, COL_NAME, LINK, DESCRIPTION
+		from CMS_COLUMN
+		where PARENT_ID = #parentId#
+		and enabled = '1'
+		order by sort
+	</select>
+	<!-- 查询已审核并且未加入索引的文章 -->
+	<select id="findWithoutIndex" resultMap="cmsArticleResultWithBLOBs"
+		parameterClass="java.lang.String">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME, AUDIT_TIME,
+		CREATOR, IS_TOP, STATE,
+		VIEWS, CONTENT,' ' COLUMN_MC, '' SUMMARY, TN_PATH, AUDITOR,
+		WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where STATE = '1' and idx = '0'
+	</select>
+
+	<update id="updateIndex" parameterClass="java.lang.String">
+		update CMS_ARTICLE
+		set idx = '1'
+		where ID = #id#
+	</update>
+
+	<!-- 判断抓取的文章是否已经存在 -->
+	<select id="countByTitle" resultClass="int" parameterClass="java.lang.String">
+		select count(1)
+		from CMS_ARTICLE
+		where TITLE = #title#
+	</select>
+
+	<select id="getByColumnId" resultMap="cmsArticleResultWithBLOBs"
+		parameterClass="java.lang.String">
+        <![CDATA[
+			select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME, AUDIT_TIME, CREATOR, IS_TOP, STATE,
+            VIEWS, CONTENT,' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR ,WORD_PATH,FILENAME
+            from CMS_ARTICLE
+            where COLUMN_ID = #columnId#  
+            and UNIX_TIMESTAMP(PUBLISH_TIME) >= UNIX_TIMESTAMP(SYSDATE()-1)
+            and STATE = '1' 
+            order by PUBLISH_TIME desc LIMIT 0,4
+		]]>
+	</select>
+	<select id="findId" resultMap="cmsfindId" parameterClass="java.lang.String">
+		SELECT a.id,a.TITLE TITLE,a.publish_time,b.col_name COLUMN_MC from
+		cms_article a
+		LEFT JOIN cms_column b on a.column_id=b.id
+		where
+		column_id=#columnId# order by a.publish_time desc LIMIT 0,1
+	</select>
+	<!-- 附件上传功能 -->
+	<resultMap id="appendixResult" class="songhu.common.pojo.Appendix">
+		<result column="ARTICLE_ID" property="articleId" />
+		<result column="ID" property="id" />
+		<result column="FILENAME" property="filename" />
+		<result column="PATH" property="path" />
+		<result column="COLUMN_ID" property="columnId" />
+		<result column="CZSJ" property="czsj" />
+		<result column="CZRY" property="czry" />
+	</resultMap>
+	<resultMap id="appendixResult2" class="songhu.common.pojo.Appendix"
+		extends="cmsArticle.appendixResult">
+		<result column="COL_NAME" property="colName" />
+	</resultMap>
+	<select id="findAppendix" resultMap="appendixResult"
+		parameterClass="songhu.common.pojo.Appendix">
+		select * from cms_appendix
+		where 1=1
+		<isNotEmpty prepend="and" property="columnId">
+			COLUMN_ID = #columnId#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="articleId">
+			ARTICLE_ID = #articleId#
+		</isNotEmpty>
+		order by id desc
+	</select>
+	<select id="getAppendix" resultMap="appendixResult"
+		parameterClass="java.lang.String">
+		select * from cms_appendix
+		where ID = #id#
+	</select>
+	<select id="getAppendixByArticleId" resultMap="appendixResult"
+		parameterClass="java.lang.String">
+		select * from cms_appendix
+		where ARTICLE_ID = #articleId#
+	</select>
+	<delete id="deleteAppendix" parameterClass="java.lang.String">
+		delete from cms_appendix
+		where ID = #id#
+	</delete>
+	<update id="updateAppendix" parameterClass="songhu.common.pojo.Appendix">
+		update cms_appendix
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="articleId">
+				article_Id = #articleId#
+			</isNotNull>
+			<isNotNull prepend="," property="articleId">
+				FILENAME = #filename#
+			</isNotNull>
+			<isNotNull prepend="," property="path">
+				PATH = #path#
+			</isNotNull>
+			<isNotNull prepend="," property="columnId">
+				COLUMN_ID = #columnId#
+			</isNotNull>
+			<isNotNull prepend="," property="czsj">
+				CZSJ = SYSDATE()
+			</isNotNull>
+			<isNotNull prepend="," property="czry">
+				CZRY = #czry#
+			</isNotNull>
+		</dynamic>
+		where ID = #id#
+	</update>
+	<insert id="insertAppendix" parameterClass="songhu.common.pojo.Appendix">
+		insert into cms_appendix
+		(ARTICLE_ID,ID,FILENAME,PATH,COLUMN_ID,CZSJ,CZRY,STATE)
+		values (#articleId#,nextval('SEQ_APPENDIX_ID'), #filename#, #path#,
+		#columnId#, SYSDATE(), #czry#,#state#)
+	</insert>
+	<delete id="deleteAll" parameterClass="java.lang.String">
+		delete from cms_appendix
+		where ARTICLE_ID = #articleId#
+	</delete>
+	<select id="listPath" resultMap="appendixResult" parameterClass="java.lang.String">
+		select * from cms_appendix
+		where ARTICLE_ID = #articleId#
+	</select>
+	<update id="updateAppendix2" parameterClass="java.util.Map">
+		update cms_appendix
+		set ARTICLE_ID = #articleId#
+		where ARTICLE_ID = #sjc#
+	</update>
+	<select id="getByPrimaryKey2" resultMap="cmsArticleResultWithBLOBs"
+		parameterClass="java.lang.String">
+		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME, AUDIT_TIME,
+		CREATOR, IS_TOP, STATE,
+		VIEWS, CONTENT,' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME
+		from CMS_ARTICLE
+		where WORD_PATH = #sjc#
+	</select>
+	<delete id="deleteAppendix2" parameterClass="java.lang.String">
+		delete from cms_appendix
+		where ARTICLE_ID = #sjc#
+	</delete>
+	<update id="updateState" parameterClass="java.lang.String">
+		update cms_appendix
+		set state = '1'
+		where ARTICLE_ID = #articleId#
+	</update>
+	<delete id="deleteAppendix3">
+		delete from cms_appendix
+		where state = '0'
+	</delete>
+	<select id="findArticleId" resultMap="appendixResult">
+		SELECT
+		DISTINCT(t.ARTICLE_ID),t.id,t.filename,t.path,t.column_id,t.czsj,t.czry
+		from cms_appendix t
+		where state = '0'
+	</select>
+	<select id="listPath2" resultMap="appendixResult"
+		parameterClass="java.lang.String">
+		select * from cms_appendix
+		where ARTICLE_ID = #articleId# and state='0'
+	</select>
+	<select id="listPath3" resultMap="appendixResult"
+		parameterClass="java.lang.String">
+		select * from cms_appendix
+		where ARTICLE_ID = #articleId# and state='1'
+	</select>
+	<update id="updateState2" parameterClass="java.lang.String">
+		update CMS_ARTICLE
+		set state = '0'
+		where ID = #articleId#
+	</update>
+	<select id="findState" resultClass="java.lang.String"
+		parameterClass="java.lang.String">
+		select state from CMS_ARTICLE
+		where id = #articleId#
+	</select>
+
+	<procedure id="removeDuplicateArticles" parameterClass="java.lang.String">
+		{call removeDuplicateArticles()}
+	</procedure>
+
+	<select id="getCralerTaskState" resultClass="java.lang.String"
+		parameterClass="java.lang.String">
+		SELECT TIMESTAMPDIFF(HOUR,START_TIME,SYSDATE())
+		FROM cms_crawler_task
+		where TASK_ID = #taskId#
+	</select>
+	<update id="setCralerTaskStart" parameterClass="java.lang.String">
+		update CMS_CRAWLER_TASK
+		set START_TIME = SYSDATE()
+		where TASK_ID = #taskId#
+	</update>
+	<update id="setCralerTaskEnd" parameterClass="java.lang.String">
+		update CMS_CRAWLER_TASK
+		set END_TIME = SYSDATE()
+		where TASK_ID = #taskId#
+	</update>
+</sqlMap>

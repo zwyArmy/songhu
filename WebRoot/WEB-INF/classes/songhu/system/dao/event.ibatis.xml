@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="gEvent">
+    <resultMap id="eventResult" class="songhu.system.pojo.Event">
+        <result column="EVENTID" property="eventid" />
+        <result column="USERID" property="userid" />
+        <result column="ACCOUNT" property="account" />
+        <result column="USERNAME" property="username" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="ACTIVETIME" property="activetime" />
+        <result column="REQUESTPATH" property="requestpath" />
+        <result column="METHODNAME" property="methodname" />
+        <result column="COSTTIME" property="costtime" />
+    </resultMap>
+    <insert id="insert" parameterClass="songhu.system.pojo.Event">
+        insert into G_EVENT (EVENTID, USERID, ACCOUNT, USERNAME, DESCRIPTION, ACTIVETIME,
+            REQUESTPATH, METHODNAME, COSTTIME)
+        values (#eventid#, #userid#, #account#, #username#, 
+        decode(substr(#requestpath# ,instr(#requestpath#,'.',1,1)),'.do',#username#||'['||#account#||']Call Action Method['||#requestpath#||']','.jsp',
+        (select #username#||'['||#account#||']Open Menu['||mc||']' from g_menu where '/'||click=#requestpath#)), 
+        to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'), #requestpath#, #methodname#, #costtime#)
+    </insert>
+    <update id="updateByPrimaryKey" parameterClass="songhu.system.pojo.Event">
+        update G_EVENT
+        set USERID = #userid#,
+            ACCOUNT = #account#,
+            USERNAME = #username#,
+            DESCRIPTION = #description#,
+            ACTIVETIME = #activetime#,
+            REQUESTPATH = #requestpath#,
+            METHODNAME = #methodname#,
+            COSTTIME = #costtime#
+        where EVENTID = #eventid#
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Event">
+        update G_EVENT
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="userid">
+                USERID = #userid#
+            </isNotNull>
+            <isNotNull prepend="," property="account">
+                ACCOUNT = #account#
+            </isNotNull>
+            <isNotNull prepend="," property="username">
+                USERNAME = #username#
+            </isNotNull>
+            <isNotNull prepend="," property="description">
+                DESCRIPTION = #description#
+            </isNotNull>
+            <isNotNull prepend="," property="activetime">
+                ACTIVETIME = #activetime#
+            </isNotNull>
+            <isNotNull prepend="," property="requestpath">
+                REQUESTPATH = #requestpath#
+            </isNotNull>
+            <isNotNull prepend="," property="methodname">
+                METHODNAME = #methodname#
+            </isNotNull>
+            <isNotNull prepend="," property="costtime">
+                COSTTIME = #costtime#
+            </isNotNull>
+        </dynamic>
+        where EVENTID = #eventid#
+    </update>
+    <delete id="deleteByPrimaryKey" parameterClass="songhu.system.pojo.Event">
+        delete from G_EVENT
+        where EVENTID = #eventid#
+    </delete>
+    <select id="getByPrimaryKey" resultMap="eventResult" parameterClass="songhu.system.pojo.Event">
+        select a.EVENTID, a.USERID, a.ACCOUNT, a.USERNAME, a.DESCRIPTION, a.ACTIVETIME, a.REQUESTPATH, a.METHODNAME,
+            a.COSTTIME, c.SWJG_MC DEPARTMENT
+        from G_EVENT a, DM_CZRY b , DM_SWJG c
+        where a.USERID = b.CZRY_DM and b.SWJG_DM = c.SWJG_DM
+    </select>       
+    <delete id="deleteAll" parameterClass="java.lang.String">
+        delete from G_EVENT
+    </delete>  
+    <select id="find" resultMap="eventResult" parameterClass="songhu.system.pojo.Event">
+     	select a.EVENTID, a.USERID, a.ACCOUNT, a.USERNAME, a.DESCRIPTION, a.ACTIVETIME, a.REQUESTPATH, a.METHODNAME,
+            a.COSTTIME, c.SWJG_MC DEPARTMENT
+        from G_EVENT a, DM_CZRY b , DM_SWJG c
+        where a.USERID = b.CZRY_DM and b.SWJG_DM = c.SWJG_DM
+		<isNotEmpty prepend="and" property="account">
+			a.ACCOUNT = #account#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="username">
+			a.USERNAME like '%'||#username#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="activetime">
+			a.ACTIVETIME >= #activetime#||' 00:00:01'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="activetime1">
+		<![CDATA[	a.ACTIVETIME <= #activetime1#||' 23:59:59' ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="description">
+			a.DESCRIPTION like '%'||#description#||'%'
+		</isNotEmpty>
+		order by a.ACTIVETIME desc
+    </select>
+</sqlMap>

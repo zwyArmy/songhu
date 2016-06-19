@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cmsXyrz">
+	<resultMap id="cmsXyrzResult" class="songhu.common.pojo.Xyrz">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="item_no" property="itemNo" />
+		<result column="create_time" property="createTime" />
+		<result column="visits" property="visits" />
+		<result column="description" property="description" />
+		<result column="state" property="state" />
+		<result column="author" property="author" />
+		<result column="path" property="path" />
+		<result column="type" property="type" />
+		<result column="type_name" property="typeName" />
+	</resultMap>
+	<insert id="insert" parameterClass="songhu.common.pojo.Xyrz">
+		insert into cms_xyrz (id, name, item_no, create_time, visits, description,
+		state, author,
+		path,type)
+		values (LPAD(nextval('SEQ_XYRZ_ID'),20,'0'), #name#, CONCAT((SELECT kz FROM
+		g_dm where zldm = 'RZLX' and dm =
+		#type#),'-',LPAD(nextval('SEQ_ITEM_NO'),3,'0')) , SYSDATE(), #visits#,
+		#description#, #state#, #author#,
+		#path#,#type#)
+	</insert>
+	<update id="updateByPrimaryKey" parameterClass="songhu.common.pojo.Xyrz">
+		update cms_xyrz
+		set name = #name#,
+		item_no = #itemNo#,
+		create_time = #createTime#,
+		visits = #visits#,
+		description = #description#,
+		state = #state#,
+		author = #author#,
+		path = #path#,
+		type = #type#
+		where id = #id#
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterClass="songhu.common.pojo.Xyrz">
+		update cms_xyrz
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="," property="type">
+				item_no = CONCAT((SELECT kz FROM g_dm where zldm = 'RZLX' and dm =
+				#type#),right(item_no,4))
+			</isNotNull>
+			<isNotNull prepend="," property="createTime">
+				create_time = #createTime#
+			</isNotNull>
+			<isNotNull prepend="," property="visits">
+				visits = #visits#
+			</isNotNull>
+			<isNotNull prepend="," property="description">
+				description = #description#
+			</isNotNull>
+			<isNotNull prepend="," property="state">
+				state = #state#
+			</isNotNull>
+			<isNotNull prepend="," property="author">
+				author = #author#
+			</isNotNull>
+			<isNotNull prepend="," property="path">
+				path = #path#
+			</isNotNull>
+			<isNotNull prepend="," property="type">
+				type = #type#
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+	<delete id="deleteByPrimaryKey" parameterClass="java.lang.String">
+		delete from cms_xyrz
+		where id = #id#
+	</delete>
+	<select id="getByPrimaryKey" resultMap="cmsXyrzResult"
+		parameterClass="java.lang.String">
+		select id, name, item_no, create_time, visits, description, state, author,
+		path
+		,type,'' type_name
+		from cms_xyrz
+		where id = #id#
+	</select>
+	<select id="find" resultMap="cmsXyrzResult" parameterClass="songhu.common.pojo.Xyrz">
+		select id, name, item_no, create_time, visits, description, state,
+		author, path
+		,type,b.dmmc type_name
+		from cms_xyrz,g_dm b
+		where b.zldm = 'RZLX' and b.dm = type
+		<isNotEmpty prepend="and" property="name">
+			name like CONCAT('%',TRIM(#name#),'%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="type">
+			type = #type#
+		</isNotEmpty>
+	</select>
+</sqlMap>

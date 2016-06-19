@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="gDm">
+    <resultMap id="gDmResult" class="songhu.system.pojo.Code">
+        <result column="DM" property="dm" />
+        <result column="ZLDM" property="zldm" />
+        <result column="DMMC" property="dmmc" />
+        <result column="KZ" property="kz" />
+        <result column="ENABLED" property="enabled" />
+    </resultMap>
+    <resultMap id="gDmRt" class="songhu.system.pojo.Code">
+        <result column="ZLDM" property="zldm" />
+        <result column="ZLMC" property="dmmc" />
+    </resultMap>
+    <insert id="insert" parameterClass="songhu.system.pojo.Code">
+        insert into G_DM (DM, ZLDM, DMMC, KZ,ENABLED)
+        values (#dm#, #zldm#, #dmmc#, #kz#,#enabled#)
+    </insert>
+    <insert id="insertZldm" parameterClass="songhu.system.pojo.Code">
+        insert into G_ZLDM (ZLDM, ZLMC)
+        values (#zldm#, #dmmc#)
+    </insert>
+    <update id="updateByPrimaryKey" parameterClass="songhu.system.pojo.Code">
+        update G_DM
+        set DMMC = #dmmc#,
+        	KZ = #kz#
+        where DM = #dm#
+          and ZLDM = #zldm#
+    </update>
+    <update id="updateZldm" parameterClass="songhu.system.pojo.Code">
+        update G_ZLDM
+        set ZLMC = #dmmc#
+        where ZLDM = #zldm#
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Code">
+        update G_DM
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="dmmc">
+                DMMC = #dmmc#
+            </isNotNull>
+            <isNotNull prepend="," property="kz">
+                KZ = #kz#
+            </isNotNull>
+             <isNotNull prepend="," property="enabled">
+                ENABLED = #enabled#
+            </isNotNull>
+        </dynamic>
+        where DM = #dm#
+          and ZLDM = #zldm#
+    </update>
+    <delete id="deleteByPrimaryKey" parameterClass="songhu.system.pojo.Code">
+        delete from G_DM
+        where DM = #dm#
+          and ZLDM = #zldm#
+    </delete>    
+    <delete id="deleteZldm1" parameterClass="java.lang.String">
+		        delete from G_ZLDM where ZLDM = #value#
+    </delete>
+    <delete id="deleteZldm2" parameterClass="java.lang.String">
+     			delete from G_DM where ZLDM = #value#
+    </delete>
+    <select id="getByPrimaryKey" resultMap="gDmResult" parameterClass="songhu.system.pojo.Code">
+        select DM, ZLDM, DMMC, KZ,ENABLED
+        from G_DM
+        where DM = #dm#
+          and ZLDM = #zldm#
+    </select>  
+    <select id="find" resultMap="gDmRt" parameterClass="songhu.system.pojo.Code">
+    	select ZLDM, ZLMC from G_ZLDM where  1=1
+    </select>
+    <select id="findBytoZldm" resultMap="gDmResult" parameterClass="java.lang.String">
+		 select DM, ZLDM, DMMC, KZ,ENABLED
+        from G_DM
+        where ZLDM = #zldm#
+    </select>
+    <select id="findBytoKz" resultMap="gDmResult" parameterClass="java.lang.String">
+		 select DM, ZLDM, DMMC, KZ,ENABLED
+        from G_DM
+        where KZ = #kz#
+    </select>
+    <resultMap id="gTreeCodeResult" class="songhu.system.vo.TreeCode">
+        <result column="DM" property="id" />
+        <result column="ZLDM" property="zldm" />
+        <result column="DMMC" property="dmmc" />
+        <result column="KZ" property="kz" />
+        <result column="LEAF" property="leaf" />
+        <result column="ENABLED" property="enabled" />
+    </resultMap>  
+    <select id="findZldm" resultMap="gTreeCodeResult" parameterClass="java.lang.String">
+		select ZLDM DM, ZLMC DMMC, '' ZLDM, '' KZ, 0 LEAF
+        from G_ZLDM
+    </select>    
+    <select id="findByZldm" resultMap="gTreeCodeResult" parameterClass="java.lang.String">
+		 select DM, ZLDM, DMMC, KZ, 1 LEAF,ENABLED
+        from G_DM
+        where ZLDM = #zldm# and ENABLED = '1'
+    </select>
+    <select id="findByZldm2" resultMap="gTreeCodeResult" parameterClass="java.util.Map">
+		 select DM, ZLDM, DMMC, KZ, 1 LEAF,ENABLED
+        from G_DM
+        where 1=1 and ENABLED = '1'
+        <isNotEmpty prepend="and" property="zldm">
+             ZLDM = #zldm#
+        </isNotEmpty>
+    </select>
+    <select id="findByZldm3" resultMap="gTreeCodeResult" parameterClass="java.util.Map">
+		 select DM, ZLDM, DMMC, KZ, 1 LEAF,ENABLED
+        from G_DM
+        where 1=1 and ENABLED = '1'
+        <isNotEmpty prepend="and" property="zldm">
+             ZLDM = #zldm#
+        </isNotEmpty>
+        order by  1=1
+         <isNotEmpty prepend="and" property="dm">
+             DM = #dm#
+        </isNotEmpty>
+        desc
+    </select>
+</sqlMap>

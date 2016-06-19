@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="gGw">
+    <resultMap id="gGwResult" class="songhu.system.pojo.Role">
+        <result column="DM_GW" property="dmGw" />
+        <result column="MC_GW" property="mcGw" />
+        <result column="DM_BM" property="dmBm" />
+        <result column="MC_BM" property="mcBm" />
+        <result column="LX" property="lx" />
+        <result column="SX" property="sx" />
+        <result column="BZ" property="bz" />
+        <result column="LOCKED" property="locked" />
+        <result column="SQ" property="sq" />
+    </resultMap>
+    <insert id="insert" parameterClass="songhu.system.pojo.Role">
+        insert into G_GW (DM_GW, MC_GW, DM_BM, QX_SJFW, LX, SX, BZ, LOCKED)
+        values (UUID(), #mcGw#, #dmBm#, #qxSjfw#, #lx#, #sx#, #bz#, #locked#)
+    </insert>
+    <update id="updateByPrimaryKey" parameterClass="songhu.system.pojo.Role">
+        update G_GW
+        set MC_GW = #mcGw#,
+            DM_BM = #dmBm#,
+            QX_SJFW = #qxSjfw#,
+            LX = #lx#,
+            SX = #sx#,
+            BZ = #bz#,
+            LOCKED = #locked#
+        where DM_GW = #dmGw#
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Role">
+        update G_GW
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="mcGw">
+                MC_GW = #mcGw#
+            </isNotNull>
+            <isNotNull prepend="," property="dmBm">
+                DM_BM = #dmBm#
+            </isNotNull>
+            <isNotNull prepend="," property="qxSjfw">
+                QX_SJFW = #qxSjfw#
+            </isNotNull>
+            <isNotNull prepend="," property="lx">
+                LX = #lx#
+            </isNotNull>
+            <isNotNull prepend="," property="sx">
+                SX = #sx#
+            </isNotNull>
+            <isNotNull prepend="," property="bz">
+                BZ = #bz#
+            </isNotNull>
+            <isNotNull prepend="," property="locked">
+                LOCKED = #locked#
+            </isNotNull>
+        </dynamic>
+        where DM_GW = #dmGw#
+    </update>
+    <delete id="deleteByPrimaryKey1" parameterClass="java.lang.String">
+        		delete from G_GW  where  DM_GW = #dmGw#	
+    </delete>
+    <delete id="deleteByPrimaryKey2" parameterClass="java.lang.String">
+    delete from G_GWQX where DM_GW = #dmGw#
+    </delete>
+    <delete id="deleteByPrimaryKey3" parameterClass="java.lang.String">
+    delete from G_CZRYGW  where DM_GW = #dmGw#
+    </delete>
+    <select id="getByPrimaryKey" resultMap="gGwResult" parameterClass="java.lang.String">
+        select DM_GW, MC_GW, DM_BM, b.SWJG_MC MC_BM, QX_SJFW, c.SWJG_MC MC_SJFW, LX, SX, BZ, LOCKED
+        from G_GW a, DM_SWJG b, DM_SWJG c
+        where a.DM_BM = b.SWJG_DM(+) and a.QX_SJFW = c.SWJG_DM(+) and DM_GW = #dmGw#
+    </select>    
+    
+    <select id="find" resultMap="gGwResult" parameterClass="songhu.system.pojo.Role">
+		select DM_GW, MC_GW, DM_BM, b.deptname MC_BM, LX, SX, BZ, LOCKED,
+		       (select count(1) from G_GWQX c where c.DM_GW = a.DM_GW) SQ
+		  from G_GW a LEFT JOIN G_DEPART b ON a.DM_BM = b.deptid
+		 where 1=1
+		  <isNotEmpty prepend="and" property="dmBm">
+		  DM_BM in (
+		  SELECT t.DEPTID from g_depart t
+		  where FIND_IN_SET(DEPTID,getChildLst(#dmBm#))
+			) 
+		  </isNotEmpty>
+		  <isNotEmpty prepend="and" property="mcGw">
+			a.MC_GW  like '%$mcGw$%'
+		  </isNotEmpty>
+    </select>
+    
+    <select id="find2" resultMap="gGwResult" parameterClass="songhu.system.pojo.Role">
+    select DM_GW, MC_GW, DM_BM, b.deptname MC_BM, LX, SX, BZ, LOCKED,
+		       (select count(1) from G_GWQX c where c.DM_GW = a.DM_GW) SQ
+		  from G_GW a LEFT JOIN G_DEPART b ON a.DM_BM = b.deptid
+		 where 1=1
+		 <isNotEmpty prepend="and" property="dmBm">
+		  DM_BM in (
+		  SELECT t.DEPTID from g_depart t
+			) 
+		</isNotEmpty>
+		  <isNotEmpty prepend="and" property="mcGw">
+			a.MC_GW  like '%$mcGw$%'
+		  </isNotEmpty>
+    </select>
+    
+    <insert id="insertGwqx" parameterClass="java.util.Map">
+        insert into G_GWQX (DM_GW, DM_QX, LB)
+        values (#gw#, #qx#, '00')
+    </insert>
+    
+    <delete id="deleteGwqx" parameterClass="java.util.Map">
+        delete from G_GWQX
+        where 1=1
+		<isNotEmpty prepend="and" property="gw">
+			DM_GW = #gw#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="qx">
+			DM_QX = #qx#
+		</isNotEmpty>        
+    </delete>
+    
+    <insert id="insertCzrygw" parameterClass="java.util.Map">
+        insert into G_CZRYGW (DM_CZY, DM_GW)
+        values (#czy#, #gw#)
+    </insert>
+    
+    <delete id="deleteCzrygw" parameterClass="java.util.Map">
+        delete from G_CZRYGW
+        where 1=1
+		<isNotEmpty prepend="and" property="czy">
+			DM_CZY = #czy#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="gw">
+			DM_GW = #gw#
+		</isNotEmpty>        
+    </delete>
+</sqlMap>

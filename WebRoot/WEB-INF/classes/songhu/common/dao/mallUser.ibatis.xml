@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="mallUser">
+	<resultMap id="mallUserResult" class="songhu.common.pojo.MallUser">
+		<result column="id" property="id" />
+		<result column="email" property="email" />
+		<result column="password" property="password" />
+		<result column="name" property="name" />
+		<result column="phone" property="phone" />
+		<result column="address" property="address" />
+		<result column="postcode" property="postcode" />
+		<result column="state" property="state" />
+		<result column="verify_code" property="verifyCode" />
+	</resultMap>
+	<insert id="insert" parameterClass="songhu.common.pojo.MallUser">
+		insert into mall_user (id, email, password, name, phone, address, postcode,
+		state,
+		verify_code)
+		values (LPAD(nextval('SEQ_USER_ID'),10,'0'), #email#, #password#, #name#,
+		#phone#, #address#, #postcode#, '0',
+		#verifyCode#)
+	</insert>
+	<update id="updateByPrimaryKey" parameterClass="songhu.common.pojo.MallUser">
+		update mall_user
+		set email = #email#,
+		password = #password#,
+		name = #name#,
+		phone = #phone#,
+		address = #address#,
+		postcode = #postcode#,
+		state = #state#,
+		verify_code = #verifyCode#
+		where id = #id#
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterClass="songhu.common.pojo.MallUser">
+		update mall_user
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="email">
+				email = #email#
+			</isNotNull>
+			<isNotNull prepend="," property="password">
+				password = #password#
+			</isNotNull>
+			<isNotNull prepend="," property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="," property="phone">
+				phone = #phone#
+			</isNotNull>
+			<isNotNull prepend="," property="address">
+				address = #address#
+			</isNotNull>
+			<isNotNull prepend="," property="postcode">
+				postcode = #postcode#
+			</isNotNull>
+			<isNotNull prepend="," property="state">
+				state = #state#
+			</isNotNull>
+			<isNotNull prepend="," property="verifyCode">
+				verify_code = #verifyCode#
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+	<delete id="deleteByPrimaryKey" parameterClass="java.lang.String">
+		delete from mall_user
+		where id = #id#
+	</delete>
+	<select id="getByPrimaryKey" resultMap="mallUserResult"
+		parameterClass="java.lang.String">
+		select id, email, password, name, phone, address, postcode, state,
+		verify_code
+		from mall_user
+		where id = #id#
+	</select>
+	<select id="find" resultMap="mallUserResult" parameterClass="songhu.common.pojo.MallUser">
+		select id, email, password, name, phone, address, postcode, state,
+		verify_code
+		from mall_user
+		where 1=1
+		<isNotEmpty prepend="and" property="email">
+			email = trim(#email#)
+		</isNotEmpty>
+		<isNotEmpty prepend="name" property="name">
+			name like concat('%',#name#,'%')
+		</isNotEmpty>
+	</select>
+</sqlMap>
