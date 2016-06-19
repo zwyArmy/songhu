@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="gMenu">
+    <resultMap id="gMenuResult" class="songhu.system.pojo.Menu">
+        <result column="BH_CD" property="bhCd" />
+        <result column="FBH" property="fbh" />
+        <result column="MC" property="mc" />
+        <result column="XH" property="xh" />
+        <result column="CLICK" property="click" />
+        <result column="LB" property="lb" />
+        <result column="ENABLED" property="enabled" />
+    </resultMap>
+    <insert id="insert" parameterClass="songhu.system.pojo.Menu">
+        insert into G_MENU (BH_CD, FBH, MC, XH, CLICK, LB, ENABLED)
+        values (#bhCd#, #fbh#, #mc#, #xh#, #click#, #lb#, #enabled#)
+    </insert>
+    <update id="updateByPrimaryKey" parameterClass="songhu.system.pojo.Menu">
+        update G_MENU
+        set FBH = #fbh#,
+            MC = #mc#,
+            XH = #xh#,
+            CLICK = #click#,
+            LB = #lb#,
+            ENABLED = #enabled#
+        where BH_CD = #bhCd#
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Menu">
+        update G_MENU
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="fbh">
+                FBH = #fbh#
+            </isNotNull>
+            <isNotNull prepend="," property="mc">
+                MC = #mc#
+            </isNotNull>
+            <isNotNull prepend="," property="xh">
+                XH = #xh#
+            </isNotNull>
+            <isNotNull prepend="," property="click">
+                CLICK = #click#
+            </isNotNull>
+            <isNotNull prepend="," property="lb">
+                LB = #lb#
+            </isNotNull>
+            <isNotNull prepend="," property="enabled">
+                ENABLED = #enabled#
+            </isNotNull>
+        </dynamic>
+        where BH_CD = #bhCd#
+    </update>
+    <delete id="deleteByPrimaryKey1" parameterClass="songhu.system.pojo.Menu">
+        		delete from G_MENU  where BH_CD = #bhCd#
+    </delete>
+    <delete id="deleteByPrimaryKey2" parameterClass="songhu.system.pojo.Menu">
+    			delete from G_GWQX  where DM_QX = #bhCd#
+    </delete>
+    <select id="getByPrimaryKey" resultMap="gMenuResult" parameterClass="songhu.system.pojo.Menu">
+        select BH_CD, FBH, MC, XH, CLICK, LB, ENABLED
+        from G_MENU
+        where BH_CD = #bhCd#
+    </select>
+    <!-- 系统菜单维护用到 -->
+    <resultMap id="gTreeMenuResult" class="songhu.system.vo.TreeMenu">
+        <result column="BH_CD" property="id" />
+        <result column="FBH" property="fbh" />
+        <result column="MC" property="mc" />
+        <result column="XH" property="xh" />
+        <result column="CLICK" property="click" />
+        <result column="LB" property="lb" />
+        <result column="ENABLED" property="enabled" />
+    </resultMap>
+    <select id="findByParent" resultMap="gTreeMenuResult" parameterClass="java.lang.String">
+    <![CDATA[
+        select BH_CD, FBH, MC, XH, CLICK, c.DMMC LB, a.ENABLED
+        from G_MENU a, G_DM b, G_DM c
+        where a.DM_SYS = b.DM(+) and b.ZLDM(+) ='WBXT' and FBH = #value#
+        	  and a.LB = c.DM(+) and c.ZLDM(+) = 'QXLB'
+        order by XH
+    ]]>
+    </select>
+    <!-- 菜单显示用到 -->
+    <resultMap id="gTree" class="songhu.system.vo.Tree">
+        <result column="BH_CD" property="id" />
+        <result column="MC" property="text" />
+        <result column="HREF" property="href" />
+    </resultMap>    
+    <select id="findByNode" resultMap="gTree" parameterClass="java.util.Map">
+        select BH_CD, MC, if(CLICK is NULL,'',concat('javascript:mycheck(''' , BH_CD , ''',''' , MC , ''',''' , CLICK , ''')')) HREF
+        from G_MENU 
+        where FBH = #fbh# and 
+        BH_CD in(select trim(DM_QX) from G_CZRYGW a,G_GWQX b, G_GW c 
+        		where a.DM_GW=b.DM_GW and b.DM_GW = c.DM_GW 
+        		and c.LOCKED = 0 and a.DM_CZY=#czy#)
+       	and ENABLED = '1'
+        order by XH
+    </select>
+    <select id="findByNode2" resultMap="gTree" parameterClass="java.util.Map">
+    	select id BH_CD,col_name MC,'' HREF
+    	from cms_column
+    	where parent_id=#parentId# and id  not in('14','1112','1105','1106','1107','1108','1109','1111','01','05','06','17','09','10','1105','1108','1109','1111','1112','12','15','16','17','08','0707','0708')
+    	and id in(select trim(DM_QX) from G_CZRYGW a,G_GWQX b, G_GW c 
+        		where a.DM_GW=b.DM_GW and b.DM_GW = c.DM_GW 
+        		and c.LOCKED = 0 and a.DM_CZY=#czy#)
+    	order by id
+    </select> 
+    <!-- 岗位权限维护用到 -->
+     <resultMap id="gTreeCheck" class="songhu.system.vo.TreeCheck">
+        <result column="BH_CD" property="id" />
+        <result column="MC" property="text" />
+        <result column="CHECKED" property="checked" />
+        <result column="COMPLETE" property="complete" />
+    </resultMap>  
+    <select id="findByGrant" resultMap="gTreeCheck" parameterClass="java.util.Map">
+		 select a.BH_CD, a.MC, if(b.DM_GW is NULL,0,1) CHECKED, 0 COMPLETE
+		  from G_MENU a LEFT JOIN G_GWQX b ON a.BH_CD = b.DM_QX and b.DM_GW = #gw#
+		 where 
+		    a.FBH = #fbh#
+		  <isNotEmpty prepend="and" property="dmCzy">
+		   a.bh_cd in
+            (select distinct (t.dm_qx)
+               from g_gwqx t
+              where t.dm_gw in (select c.DM_GW
+                                  from G_GW c, G_CZRYGW d
+                                 where c.DM_GW = d.DM_GW
+                                    and d.DM_CZY = #dmCzy#
+                                   ))
+		  </isNotEmpty>
+		   order by XH
+    </select>
+    <select id="findCzryForGw" resultMap="gTreeCheck" parameterClass="java.util.Map">  
+		select a.dm_czy BH_CD,
+		       concat(a.xm_czy,'[',a.dm_czy,']')  MC,
+		       (select count(1) from G_CZRYGW b where a.dm_czy = b.dm_czy and b.dm_gw=#gw#) CHECKED,
+		        0 COMPLETE
+		  from G_CZRY a
+		 where a.dm_bm = #fbh#
+    </select>
+    <select id="findGwForCzry" resultMap="gTreeCheck" parameterClass="java.util.Map">	  select a.DM_GW BH_CD,
+	    <![CDATA[   CONCAT(a.MC_GW,'<font color=grey>(公共)</font>')  MC, ]]>
+	       (select count(1)
+	          from G_CZRYGW b
+	         where b.dm_czy = #czy#
+	           and b.dm_gw = a.dm_gw) CHECKED,
+	       0 COMPLETE
+	   from G_GW a
+	   where a.sx = '2'
+       and a.locked='0'
+       union
+	    select a.DM_GW BH_CD,
+	           a.MC_GW MC,
+	           (select count(1) from G_CZRYGW b where b.dm_czy = #czy# and b.dm_gw=a.dm_gw) CHECKED,
+	            0 COMPLETE
+	      from G_GW a
+	     where a.dm_bm = #fbh#
+      	 and a.sx='1'
+       	 and a.locked='0'
+    </select>
+    <select id="findWithoutQx" resultMap="gTreeCheck" parameterClass="java.util.Map">
+        select BH_CD, MC, 0 CHECKED,case when (bh_cd not in (select trim(DM_QX) from G_GWQX where DM_GW=#gw#)) then 0 else 1 end COMPLETE
+        from G_MENU 
+        where FBH = #fbh#
+		<isNotEmpty prepend="and" property="qxlb">
+			(LB  = #qxlb# or LB is null)
+		</isNotEmpty>
+        order by XH
+    </select>
+    <select id="findByAll" resultMap="gTreeCheck" parameterClass="java.lang.String">
+        select BH_CD, MC, 0 CHECKED, 0 COMPLETE
+        from G_MENU 
+        where FBH = #fbh#
+        order by XH
+    </select>
+</sqlMap>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="cmsAd">
+	<resultMap id="cmsAdResult" class="songhu.common.pojo.Ad">
+		<result column="ID" property="id" />
+		<result column="COLUMN_ID" property="columnId" />
+		<result column="POS_ID" property="posId" />
+		<result column="POS_DESC" property="posDesc" />
+		<result column="PIC_DESC" property="picDesc" />
+		<result column="PIC_PATH" property="picPath" />
+		<result column="URL" property="url" />
+	</resultMap>
+	<insert id="insert" parameterClass="songhu.common.pojo.Ad">
+		insert into CMS_AD (ID, COLUMN_ID, POS_ID, POS_DESC, PIC_DESC, PIC_PATH,
+		URL)
+		values (nextval('SEQ_PRODUCT_ID'), #columnId#, #posId#, #posDesc#,
+		#picDesc#, #picPath#, #url#)
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterClass="songhu.common.pojo.Ad">
+		update CMS_AD
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="columnId">
+				COLUMN_ID = #columnId#
+			</isNotNull>
+			<isNotNull prepend="," property="posId">
+				POS_ID = #posId#
+			</isNotNull>
+			<isNotNull prepend="," property="posDesc">
+				POS_DESC = #posDesc#
+			</isNotNull>
+			<isNotNull prepend="," property="picDesc">
+				PIC_DESC = #picDesc#
+			</isNotNull>
+			<isNotNull prepend="," property="picPath">
+				PIC_PATH = #picPath#
+			</isNotNull>
+			<isNotNull prepend="," property="url">
+				URL = #url#
+			</isNotNull>
+		</dynamic>
+		where ID = #id#
+	</update>
+	<delete id="deleteByPrimaryKey" parameterClass="java.lang.String">
+		delete from CMS_AD
+		where ID = #id#
+	</delete>
+	<select id="getByPrimaryKey" resultMap="cmsAdResult"
+		parameterClass="songhu.common.pojo.Ad">
+		select ID, COLUMN_ID, POS_ID, POS_DESC, PIC_DESC, PIC_PATH, URL
+		from CMS_AD
+		where COLUMN_ID = #columnId# and POS_ID = #posId#
+	</select>
+	<!-- 测试页面 -->
+	<!-- 初始化显示表格信息，并进行相关条件的查询 -->
+	<select id="find" resultMap="cmsAdResult" parameterClass="songhu.common.pojo.Ad">
+		select ID, COLUMN_ID, POS_ID, POS_DESC, PIC_DESC, PIC_PATH, URL
+		from CMS_AD
+		where 1=1
+		<isNotEmpty prepend="and" property="picPath">
+			PIC_PATH like CONCAT（'%',#picPath#,'%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="columnId">
+			COLUMN_ID = #columnId#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="posId">
+			POS_ID = #posId#
+		</isNotEmpty>
+		order by id
+	</select>
+	<select id="listByColumnId" resultMap="cmsAdResult"
+		parameterClass="java.lang.String">
+		select *
+		from CMS_AD
+		where COLUMN_ID = #columnId#
+	</select>
+</sqlMap>

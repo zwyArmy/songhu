@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+.home {
+	background-image: url(../image/ext/application_home.png) !important;
+}
+.mytabs {
+	background-image: url(../image/ext/layout.png) !important;
+}
+.navi {
+	background-image: url(../image/ext/application_view_list.png) !important;
+}
+.search {
+	background-image: url(../image/ext/zoom.png) !important;
+}
+.add {
+	background-image: url(../image/ext/add.png) !important;
+}
+.update {
+	background-image: url(../image/ext/page_edit_1.png) !important;
+}
+.delete {
+	background-image: url(../image/ext/delete.png) !important;
+}
+.save {
+	background-image: url(../image/ext/disk.gif) !important;
+}
+.accept {
+	background-image: url(../image/ext/accept.png) !important;
+}
+.cancel {
+	background-image: url(../image/ext/cancel.gif) !important;
+}
+.group {
+	background-image: url(../image/ext/group.png) !important;
+}
+.group-link {
+	background-image: url(../image/ext/group_link.png) !important;
+}
+.icon-expand-all {
+	background-image: url(../image/ext/expand-all.gif) !important;
+}
+.icon-collapse-all {
+	background-image: url(../image/ext/collapse-all.gif) !important;
+}
+.tux {
+	background-image: url(../image/ext/tux.png) !important;
+}
+.comments {
+	background-image: url(../image/ext/comments.png) !important;
+}
+.printer {
+	background-image: url(../image/ext/printer.png) !important;
+}

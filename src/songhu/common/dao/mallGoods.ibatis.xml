@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="mallGoods">
+	<resultMap id="mallGoodsResult" class="songhu.common.pojo.MallGoods">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="description" property="description" />
+		<result column="picture" property="picture" />
+		<result column="price" property="price" />
+		<result column="state" property="state" />
+	</resultMap>
+	<insert id="insert" parameterClass="songhu.common.pojo.MallGoods">
+		insert into mall_goods (id, name, description, picture, price, state)
+		values (LPAD(nextval('SEQ_GOODS_ID'),10,'0'), #name#, #description#,
+		#picture#, #price#, #state#)
+	</insert>
+	<update id="updateByPrimaryKey" parameterClass="songhu.common.pojo.MallGoods">
+		update mall_goods
+		set name = #name#,
+		description = #description#,
+		picture = #picture#,
+		price = #price#,
+		state = #state#
+		where id = #id#
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterClass="songhu.common.pojo.MallGoods">
+		update mall_goods
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="," property="description">
+				description = #description#
+			</isNotNull>
+			<isNotNull prepend="," property="picture">
+				picture = #picture#
+			</isNotNull>
+			<isNotNull prepend="," property="price">
+				price = #price#
+			</isNotNull>
+			<isNotNull prepend="," property="state">
+				state = #state#
+			</isNotNull>
+		</dynamic>
+		where id = #id#
+	</update>
+	<delete id="deleteByPrimaryKey" parameterClass="java.lang.String">
+		delete from mall_goods
+		where id = #id#
+	</delete>
+	<select id="getByPrimaryKey" resultMap="mallGoodsResult"
+		parameterClass="java.lang.String">
+		select id, name, description, picture, price, state
+		from mall_goods
+		where id = #id#
+	</select>
+	<select id="find" resultMap="mallGoodsResult" parameterClass="songhu.common.pojo.MallGoods">
+		select id, name, description, picture, price, state
+		from mall_goods
+		where 1=1
+		<isNotEmpty prepend="and" property="name">
+			name like concat('%',trim(#name#),'%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="state">
+			state = #state#
+		</isNotEmpty>
+	</select>
+</sqlMap>

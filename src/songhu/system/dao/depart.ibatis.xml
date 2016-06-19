@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Depart">
+    <resultMap id="treeResult" class="songhu.system.vo.Tree">
+        <result column="DEPTID" property="id" />
+        <result column="DEPTNAME" property="text" />
+        <result column="LEAF" property="leaf" />
+    </resultMap>
+    
+    <resultMap id="gDepartResult" class="songhu.system.pojo.Depart">
+        <result column="DEPTID" property="deptid" />
+        <result column="DEPTNAME" property="deptname" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="PARENTDEPTID" property="parentdeptid" />
+        <result column="EMAIL" property="email"/>
+        <result column="PHONE" property="phone"/>
+    </resultMap>
+    <select id="findByParent" resultMap="treeResult" parameterClass="java.lang.String">
+	select deptid, deptname,
+	       (select if(count(*)=0,1,0) from g_depart a where a.parentdeptid = t.deptid) leaf
+	  from g_depart t
+	  where t.parentdeptid=#id#
+	  order by deptid
+    </select> 
+    <insert id="insert" parameterClass="songhu.system.pojo.Depart">
+        insert into G_DEPART (DEPTID, DEPTNAME, DESCRIPTION, PARENTDEPTID, EMAIL, PHONE)
+        values (#deptid#, #deptname#, #description#, #parentdeptid#, #email#, #phone#)
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Depart">
+        update G_DEPART
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="deptname">
+                DEPTNAME = #deptname#
+            </isNotNull>
+            <isNotNull prepend="," property="description">
+                DESCRIPTION = #description#
+            </isNotNull>
+            <isNotNull prepend="," property="description">
+                PARENTDEPTID = #parentdeptid#
+            </isNotNull>
+            <isNotNull prepend="," property="email">
+                EMAIL = #email#
+            </isNotNull>
+            <isNotNull prepend="," property="phone">
+                PHONE = #phone#
+            </isNotNull>
+        </dynamic>
+        where DEPTID = #deptid#
+   </update>
+   <delete id="deleteByPrimaryKey" parameterClass="java.lang.String">
+        delete from G_DEPART
+        where DEPTID = #deptid#
+    </delete>
+     <select id="getByPrimaryKey" resultMap="gDepartResult" parameterClass="java.lang.String">
+        select DEPTID, DEPTNAME, DESCRIPTION, PARENTDEPTID, EMAIL, PHONE
+        from G_DEPART
+        where DEPTID = #deptid#
+    </select>
+    
+    
+    <select id="find" resultMap="gDepartResult" parameterClass="songhu.system.pojo.Depart">
+	select deptid, deptname,description,parentdeptid,email,phone,
+	       (select if(count(*)=0,1, 0) from g_depart a where a.parentdeptid = t.deptid) leaf
+	  from g_depart t
+	  where t.parentdeptid=#parentdeptid#
+	  order by deptid
+    </select> 
+</sqlMap>

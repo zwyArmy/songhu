@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<!-- 业务系统的SQL映射文件装载 -->
+<sqlMapConfig>
+	<settings useStatementNamespaces="true" />
+	<!-- 请将此配置改为您的业务系统包路径下的SQL映射文件 -->
+	<sqlMap resource="com/weixin/core/dao/ibatis/conf/dynaSql.ibatis.xml" />
+    <sqlMap resource="songhu/system/dao/code.ibatis.xml" /> 
+	<sqlMap resource="songhu/system/dao/column.ibatis.xml" />
+	<sqlMap resource="songhu/system/dao/depart.ibatis.xml" />
+	<sqlMap resource="songhu/system/dao/event.ibatis.xml" />
+	<sqlMap resource="songhu/system/dao/httpsession.ibatis.xml" />
+	<sqlMap resource="songhu/system/dao/menu.ibatis.xml" />
+	<sqlMap resource="songhu/system/dao/operator.ibatis.xml" />
+	<sqlMap resource="songhu/system/dao/role.ibatis.xml" />
+	<sqlMap resource="songhu/system/dao/setting.ibatis.xml" />
+	
+	<!-- 业务模块 -->
+	<sqlMap resource="songhu/common/dao/article.ibatis.xml" />
+	<sqlMap resource="songhu/common/dao/ad.ibatis.xml" />
+	<sqlMap resource="songhu/common/dao/xyrz.ibatis.xml" />
+	<sqlMap resource="songhu/common/dao/mallGoods.ibatis.xml" />
+	<sqlMap resource="songhu/common/dao/lxfs.ibatis.xml" />
+	<sqlMap resource="songhu/common/dao/hzlj.ibatis.xml" />
+	<sqlMap resource="songhu/common/dao/mallUser.ibatis.xml" />
+	<sqlMap resource="songhu/common/dao/cmsDownload.ibatis.xml" />
+</sqlMapConfig>

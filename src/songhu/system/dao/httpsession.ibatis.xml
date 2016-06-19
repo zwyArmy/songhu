@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="gsHttpsession">
+    <resultMap id="sessionResult" class="songhu.system.pojo.Httpsession">
+        <result column="SESSIONID" property="sessionid" />
+        <result column="USERNAME" property="username" />
+        <result column="ACCOUNT" property="account" />
+        <result column="CREATETIME" property="createtime" />
+        <result column="LOGINIP" property="loginip" />
+        <result column="USERID" property="userid" />
+        <result column="EXPLORER" property="explorer" />
+    </resultMap>
+    <insert id="insert" parameterClass="songhu.system.pojo.Httpsession">
+        insert into G_HTTPSESSION (SESSIONID, USERNAME, ACCOUNT, CREATETIME, LOGINIP, USERID,
+            EXPLORER)
+        values (#sessionid#, #username#, #account#, to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'), #loginip#, #userid#, #explorer#)
+    </insert>
+    <update id="updateByPrimaryKey" parameterClass="songhu.system.pojo.Httpsession">
+        update G_HTTPSESSION
+        set USERNAME = #username#,
+            ACCOUNT = #account#,
+            CREATETIME = #createtime#,
+            LOGINIP = #loginip#,
+            USERID = #userid#,
+            EXPLORER = #explorer#
+        where SESSIONID = #sessionid#
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Httpsession">
+        update G_HTTPSESSION
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="username">
+                USERNAME = #username#
+            </isNotNull>
+            <isNotNull prepend="," property="account">
+                ACCOUNT = #account#
+            </isNotNull>
+            <isNotNull prepend="," property="createtime">
+                CREATETIME = #createtime#
+            </isNotNull>
+            <isNotNull prepend="," property="loginip">
+                LOGINIP = #loginip#
+            </isNotNull>
+            <isNotNull prepend="," property="userid">
+                USERID = #userid#
+            </isNotNull>
+            <isNotNull prepend="," property="explorer">
+                EXPLORER = #explorer#
+            </isNotNull>
+        </dynamic>
+        where SESSIONID = #sessionid#
+    </update>
+    <delete id="deleteByPrimaryKey" parameterClass="java.lang.String">
+        delete from G_HTTPSESSION
+        where SESSIONID = #sessionid#
+    </delete>    
+    <delete id="deleteAll" parameterClass="java.lang.String">
+        delete from G_HTTPSESSION
+    </delete>
+    <select id="getByPrimaryKey" resultMap="sessionResult" parameterClass="java.lang.String">
+        select a.SESSIONID, a.USERNAME, a.ACCOUNT, a.CREATETIME, a.LOGINIP, a.USERID, a.EXPLORER, c.SWJG_MC DEPARTMENT
+        from G_HTTPSESSION a, DM_CZRY b , DM_SWJG c
+        where a.USERID = b.CZRY_DM and b.SWJG_DM = c.SWJG_DM and SESSIONID = #sessionid#
+    </select>    
+    <select id="find" resultMap="sessionResult" parameterClass="songhu.system.pojo.Httpsession">
+     	select a.SESSIONID, a.USERNAME, a.ACCOUNT, a.CREATETIME, a.LOGINIP, a.USERID, a.EXPLORER, c.SWJG_MC DEPARTMENT
+        from G_HTTPSESSION a, G_CZRY b , DM_SWJG c
+        where a.ACCOUNT = b.DM_CZY(+) and b.dm_bm = c.SWJG_DM(+)
+		<isNotEmpty prepend="and" property="account">
+			a.ACCOUNT = #account#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="username">
+			a.USERNAME like '%'||#username#||'%'
+		</isNotEmpty>
+		order by a.CREATETIME
+    </select>
+</sqlMap>

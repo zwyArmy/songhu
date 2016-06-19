@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Column">
+    <resultMap  id="treeRt" class="songhu.system.vo.Tree">
+        <result column="ID" property="id"/>
+        <result column="COL_NAME" property="text"/>
+        <result column="LEAF" property="leaf"/>
+    </resultMap>
+    <resultMap id="cmsColumnResult" class="songhu.system.pojo.Column">
+        <result column="ID" property="id" />
+        <result column="PARENT_ID" property="parentId" />
+        <result column="COL_NAME" property="colName" />
+        <result column="LINK" property="link" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="SORT" property="sort" />
+        <result column="ENABLED" property="enabled" />
+        <result column="LMDM1" property="lmdm1" />
+        <result column="LMDM2" property="lmdm2" />
+    </resultMap>
+    <select id="findByParent" resultMap="treeRt" parameterClass="java.lang.String">
+	select id, col_name,
+	       (select if(count(*)=0,1,0) from cms_column a where a.parent_id = t.id) leaf
+	  from cms_column t
+	  where t.parent_id=#id#
+    </select> 
+    <insert id="insert" parameterClass="songhu.system.pojo.Column">
+        insert into CMS_COLUMN (ID, PARENT_ID, COL_NAME, LINK, DESCRIPTION, SORT, ENABLED,LMDM1,LMDM2)
+        values (#id#, #parentId#, #colName#, #link#, #description#, #sort#,#enabled#,#lmdm1#,#lmdm2#)
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterClass="songhu.system.pojo.Column">
+        update CMS_COLUMN
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="colName">
+                COL_NAME = #colName#
+            </isNotNull>
+            <isNotNull prepend="," property="link">
+                LINK = #link#
+            </isNotNull>
+            <isNotNull prepend="," property="parentId">
+                PARENT_ID = #parentId#
+            </isNotNull>
+            <isNotNull prepend="," property="description">
+                DESCRIPTION = #description#
+            </isNotNull>
+            <isNotNull prepend="," property="sort">
+                SORT = #sort#
+            </isNotNull>
+            <isNotNull prepend="," property="enabled">
+                ENABLED = #enabled#
+            </isNotNull>
+            <isNotNull prepend="," property="lmdm1">
+                LMDM1 = #lmdm1#
+            </isNotNull>
+            <isNotNull prepend="," property="lmdm2">
+                LMDM2 = #lmdm2#
+            </isNotNull>
+        </dynamic>
+        where ID = #id#
+   </update>
+   <delete id="deleteByPrimaryKey" parameterClass="java.lang.String">
+        delete from CMS_COLUMN
+        where ID = #id#
+    </delete>
+    <select id="getByPrimaryKey" resultMap="cmsColumnResult" parameterClass="java.lang.String">
+        select ID, PARENT_ID, COL_NAME, LINK, DESCRIPTION, SORT, ENABLED,LMDM1,LMDM2
+        from CMS_COLUMN
+        where ID = #id#
+    </select>
+    <select id="find" resultMap="cmsColumnResult" parameterClass="songhu.system.pojo.Column">
+	select t.*,
+	       (select if(count(*)=0,1,0) from cms_column a where a.parent_id = t.id) leaf
+	  from cms_column t
+	  where t.parent_id= #parentId#
+	  order by sort 
+    </select> 
+</sqlMap>
