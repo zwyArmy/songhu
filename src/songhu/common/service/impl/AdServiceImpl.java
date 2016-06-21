@@ -19,6 +19,7 @@ import songhu.common.service.AdService;
 public class AdServiceImpl extends CommonServiceImpl implements AdService {
 
 	private String domain = "cmsAd";
+	
 
 	@CacheEvict(value = "ad", allEntries = true)
 	public String delete(String id) throws Exception {
