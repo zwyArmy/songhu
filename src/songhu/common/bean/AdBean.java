@@ -13,6 +13,7 @@ public class AdBean {
 	public AdBean() {
 		super();
 		if (adService == null)
+			
 			adService = (AdService) BeanFactoryUtil.getBean("adService");
 	}
 
