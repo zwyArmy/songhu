@@ -66,6 +66,7 @@ public class ArticleBean {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		/*master*/
 		return null;
 	}
 	
