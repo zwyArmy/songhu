@@ -61,10 +61,10 @@
 			listeners : {
 				'beforeload' : function(sto, opt) {
 					sto.baseParams = {
-						start : 0,
-						limit : 30,						
-						name : Ext.getCmp("cx_name").getValue(),
-						type : Ext.getCmp("cx_type").getValue()
+						start : 0,  /*开始页码*/
+						limit : 30,	/*结束页面*/					
+						name : Ext.getCmp("cx_name").getValue(), /*文章标题*/
+						type : Ext.getCmp("cx_type").getValue()  /*文章类型*/
 					};
 				}
 			}
@@ -78,11 +78,11 @@
 				msg : '数据正在加载中......'
 			}),
 			columns : [ new Ext.grid.RowNumberer(), {
-				header : "id",
-				width : 8,
-				hidden : true,
-				sortable : true,
-				dataIndex : 'id'
+				header : "id",  /*名称*/
+				width : 8,  /*长度*/
+				hidden : true,  /*是否隐藏*/
+				sortable : true, /*是否可排序*/
+				dataIndex : 'id' /*name*/
 			},{
 				header : "type",
 				width : 8,
