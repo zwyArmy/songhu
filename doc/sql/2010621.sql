@@ -13,3 +13,4 @@ CREATE TABLE `cms_xyrz` (
   `type` varchar(32) DEFAULT NULL,
   `type_name` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*dev*/
