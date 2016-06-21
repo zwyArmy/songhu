@@ -65,6 +65,7 @@ public class ArticleBean {
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("**********");
 		}
 		return null;
 	}
