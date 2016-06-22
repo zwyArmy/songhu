@@ -99,7 +99,7 @@
 </bean>
 
 <bean id="lock" class="songhu.util.timer.Lock">
-	<property name="lock"><value>true</value></property><!-- 设为false启用job -->
+	<property name="lock"><value>false</value></property>
 </bean>
 
  <!-- 拦截器 -->
