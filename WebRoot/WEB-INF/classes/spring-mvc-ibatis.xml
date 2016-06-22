@@ -95,9 +95,9 @@
  	<property name="commonDao" ref="commonDao"></property>
  </bean>
  
-<!-- 定时任务配置 -->
+<!-- 定时任务配置
 <context:component-scan base-package="weixin.util.timer" />
 <task:executor id="executor" pool-size="5" />  
 <task:scheduler id="scheduler" pool-size="10" />  
-<task:annotation-driven executor="executor" scheduler="scheduler" />
+<task:annotation-driven executor="executor" scheduler="scheduler" /> -->
 </beans>
