@@ -15,4 +15,6 @@ public interface XyrzService {
 	Xyrz getByPrimaryKey(String id) throws Exception;
 
 	Page find(Xyrz xyrz, RowSelection row) throws Exception;
+
+	Page findByType(String type, int limit) throws Exception;
 }

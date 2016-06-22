@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.weixin.core.dao.support.RowSelection;
 import com.weixin.core.model.Page;
 import com.weixin.core.service.impl.CommonServiceImpl;
+import com.weixin.core.util.QMap;
 
 import songhu.common.pojo.Xyrz;
 import songhu.common.service.XyrzService;
@@ -43,6 +44,18 @@ public class XyrzServiceImpl extends CommonServiceImpl implements XyrzService {
 		List<Xyrz> list = this.getCommonDao().find(domain, "find", xyrz, row);
 		Page page = new Page(row.getTotalRows(), list);
 		return page;
+	}
+
+	@Override
+	public Page findByType(String type, int limit) throws Exception {
+		QMap map = new QMap("type",type);
+		RowSelection row = new RowSelection();
+		row.setFirstRow(0);
+		row.setFetchSize(limit); 
+		List<Xyrz> list = this.getCommonDao().find(domain, "findByType",type,row);
+		Page page = new Page(row.getTotalRows(), list);
+		return page;
+		
 	}
 
 }

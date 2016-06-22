@@ -70,7 +70,7 @@ public class XyrzController extends BaseController {
 					File old = new File(path + xyrz.getPath());
 					old.delete();
 				}
-				xyrz.setPath(localfilename);
+				xyrz.setPath("/songhu/xyrz/"+localfilename);
 			}
 			xyrz.setAuthor(user.getUserId());
 			if (cz.equals("1")) {
@@ -97,5 +97,19 @@ public class XyrzController extends BaseController {
 		old.delete();
 		AjaxJson j = new AjaxJson();
 		return j;
+	}
+	// 删除
+	@RequestMapping(params = "findByType" , method = RequestMethod.GET)
+	@ResponseBody
+	public Page findByType(String type, int limit) throws Exception {
+		/*xyrzService.delete(id);
+		String path = "";
+		path = SystemPath.getSysPath() + "songhu/xyrz/";
+		File old = new File(path + picPath);
+		old.delete();
+		*/
+		Page page = xyrzService.findByType(type,limit);
+		return page;
+		
 	}
 }
