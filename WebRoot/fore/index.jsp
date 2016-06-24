@@ -20,19 +20,6 @@ String webphone = StartOnLoadService.parameterMap.get("webphone");
 <html>
 <head>
 <title>厦门嵩湖环保股份有限公司</title>
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-1.11.0.min.js"></script>
-<!-- Custom Theme files -->
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
-<!-- Custom Theme files -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Civil Engineer Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!--Google Fonts-->
-
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
@@ -48,7 +35,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 <style type="text/css">
 body,td,th {
-	font-family: "微软雅黑";
+	font-family: "MicrosoftYaHei";
 }
 </style>
 </head>
@@ -56,35 +43,7 @@ body,td,th {
 <!--banner start here-->
 <div class="banner">
   <div class="header">
-	<div class="container">
-		 <div class="header-main">
-		   <div class="logo">
-		     <h1><a href="index.html">嵩湖环保</a></h1>
-				</div>
-				<div class="top-nav">
-					<span class="menu"> <img src="images/icon.png" alt=""/></span>
-				<nav class="cl-effect-1">
-					<ul class="res">
-					<%for(int i=0;i<listColumn.size();i++){ %>
-					   <li>
-					   <a href="<%=listColumn.get(i).getLink() %>" <%if(listColumn.get(i).getId().equals(columnId)) {%>class="active"<%} %>><%=listColumn.get(i).getColName() %></a>
-					   </li> 
-					<%} %>
-				   </ul>
-				 </nav>
-					<!-- script-for-menu -->
-						 <script>
-						   $( "span.menu" ).click(function() {
-							 $( "ul.res" ).slideToggle( 300, function() {
-							 // Animation complete.
-							  });
-							 });
-						</script>
-		        <!-- /script-for-menu -->
-				</div>
-				 <div class="clearfix"> </div>
-		 </div>
-	  </div>
+  <jsp:include  page="include/top.jsp" flush="true" /> 
 	  <section class="slider">
 		 <div class="flexslider">
 			<ul class="slides">

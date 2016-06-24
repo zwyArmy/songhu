@@ -1,4 +1,4 @@
-﻿/*--
+/*--
 Author: W3layouts
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -9,7 +9,7 @@ h1, h2, h3 {margin: 0;}
 ul, ol {margin: 0;}
 p {margin: 0;}
 html, body{
-  font-family:"微软雅黑", sans-serif;
+  font-family:"MicrosoftYaHei", sans-serif;
    font-size: 100%;
    background:#fff; 
 }
@@ -23,11 +23,11 @@ a:hover {
   -o-transition: 0.5s all;
 }
 @font-face {
-    font-family:"微软雅黑";
+    font-family:"MicrosoftYaHei";
     src:url(../fonts/Hind-Regular.ttf) format('truetype');
 }
 @font-face {
-	font-family:"微软雅黑";
+	font-family:"MicrosoftYaHei";
     src:url(../fonts/MontserratAlternates-Regular.ttf) format('truetype');
 }
 
@@ -94,7 +94,7 @@ nav a:focus {
 .logo h1 {
   font-size: 3em;
   margin: 0em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .logo h1 a{
   color:#fff;	
@@ -102,7 +102,7 @@ nav a:focus {
 }
 .logo h1 a:hover{
 	text-decoration: none;
-	font-family: "微软雅黑";
+	font-family: "MicrosoftYaHei";
 	width: auto;
 	font-size: 1em;
 	color:#d3bda5
@@ -129,8 +129,8 @@ span.menu {
 	z-index: 999;
 }
 .top-nav ul li a:hover,.top-nav ul li a.active{
-	color:#000;
-	
+	color:#F9BC08;
+	font-weight:600;
 }
 .banner {
 	min-height: 795px;
@@ -160,7 +160,7 @@ span.menu {
   font-size: 2.3em;
   font-weight: 400;
   color:#d3bda5;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
   border-top: 4px double #fff;
   border-bottom: 4px double #fff;
   padding: 0.3em 0em;
@@ -196,7 +196,7 @@ span.menu {
   font-size: 3em;
   color:#d3bda5;
   margin: 0em 0em 0.2em 0em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .bann-info-main p {
   font-size: 1em;
@@ -221,7 +221,7 @@ span.menu {
   font-size: 2.5em;
   color:#d3bda5;
   margin: 0em 0em 0.3em 0em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .banner-strip-main p {
   font-size: 1.1em;
@@ -241,7 +241,7 @@ span.menu {
 }
 .plan-top h3 {
   font-size: 2.5em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
   color: #d3bda5;
   margin: 0em 0em 0.2em 0em;
 }
@@ -260,7 +260,7 @@ span.menu {
   font-size: 1.3em;
   margin: 1em 0em 0.5em 0em;
   color: #000;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .plan-bot-text h4 a{
    color: #000;
@@ -277,19 +277,19 @@ span.menu {
 .mission-top h3{
   font-size: 1.6em;
   color: #d3bda5;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .mission-top p {
   font-size: 1.15em;
   color: #000;
   margin: 0.4em 0em 0em 0em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .miss-text h4 {
   font-size: 1.5em;
   color: #000;
   margin: 0em 0em 0.5em 0em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .miss-text h4 a{
 	color: #000;
@@ -349,7 +349,7 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
   font-size: 2.2em;
   color: #fff;
   margin: 0em 0em 0.5em 0em;
-    font-family:"微软雅黑", cursive;
+    font-family:"MicrosoftYaHei", cursive;
 }
 .ftr-gd ul {
   padding: 0em;
@@ -466,7 +466,7 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
 .single-grid h2{
 	margin:0 0 0.3em;
 	font-size:2em;
-	 font-family:"微软雅黑", cursive;
+	 font-family:"MicrosoftYaHei", cursive;
 	color:#d3bda5;
 }
 .single-grid p{
@@ -479,7 +479,7 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
 	font-size: 2em;
 	color:#d3bda5;
 	  margin: 0em;
-	 font-family:"微软雅黑", cursive;
+	 font-family:"MicrosoftYaHei", cursive;
 }
 .single-left {
 	padding: 2em 0 0;
@@ -500,20 +500,20 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
 	color:#7C7C7C;
 	font-size:1em;
 	margin-right: 1em;
-	 font-family:"微软雅黑", cursive;
+	 font-family:"MicrosoftYaHei", cursive;
 }
 .cal ul li a{
 	color:#7C7C7C;
 	text-decoration:none;
 	font-size:1em;
-	 font-family:"微软雅黑", cursive;
+	 font-family:"MicrosoftYaHei", cursive;
 }
 .post-top h6 {
   font-size: 1.5em;
   color: #000;
   padding: 0.3em 0em 0.1em 0em;
   margin: 0em;
-   font-family:"微软雅黑", cursive;
+   font-family:"MicrosoftYaHei", cursive;
 }
 .post-top p{
 	font-size: 1em;
@@ -525,7 +525,7 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
 	font-size: 1.7em;
 	padding: 0em 0 0.5em;
 	  margin: 0em;
-   font-family:"微软雅黑", cursive;
+   font-family:"MicrosoftYaHei", cursive;
 }
 .grid-categories {
   padding: 0 0 1em;
@@ -551,7 +551,7 @@ ul.popular li a:hover{
   font-size: 2em;
   color:#d3bda5;
     margin: 0em;
- font-family:"微软雅黑", cursive;
+ font-family:"MicrosoftYaHei", cursive;
 }
 .single-bottom input[type="text"], .single-bottom textarea {
  font-size: 1.1em;
@@ -618,7 +618,7 @@ i.glyphicon.glyphicon-comment {
   font-size: 3em;
   color:#d3bda5;
   margin-bottom: 0.2em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .about-top p {
   font-size: 1em;
@@ -632,7 +632,7 @@ i.glyphicon.glyphicon-comment {
   color: #000;
   margin: 0em 0em 0.4em 0em;
   line-height: 1.4em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .ab-left h4 a{
   color: #000;
@@ -651,14 +651,14 @@ i.glyphicon.glyphicon-comment {
   color: #d3bda5;
   margin-bottom: 1.5em;
   text-align: center;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .we-do-top h3 {
   font-size: 2.8em;
   color: #d3bda5;
   margin-bottom: 0.2em;
   text-align: center;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .staff-grid {
   text-align: center;
@@ -667,7 +667,7 @@ i.glyphicon.glyphicon-comment {
   font-size: 1.2em;
   color: #000;
   margin: 0.5em 0em 0.2em 0em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .staff-grid p {
   font-size: 1em;
@@ -716,7 +716,7 @@ i.glyphicon.glyphicon-comment {
   font-size: 3em;
   color:#d3bda5;
   margin-bottom: 0.2em;
-   font-family:"微软雅黑", cursive;
+   font-family:"MicrosoftYaHei", cursive;
 }
 .services-top p {
   font-size: 1em;
@@ -749,7 +749,7 @@ i.glyphicon.glyphicon-comment {
   color: #d3bda5;
   text-align: center;
   margin-bottom: 1.5em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .cord-drop span.numbers {
   background: #d3bda5;
@@ -768,7 +768,7 @@ i.glyphicon.glyphicon-comment {
 .over-ve-text h4 {
   font-size: 1.3em;
   margin: 0em 0em 0.5em 0em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .over-ve-text h4 a {
   color: #000;
@@ -826,13 +826,13 @@ span.glyphicon.glyphicon-tree-deciduous {
   font-weight: 300;
   color: #000;
   margin: 0px 0px 30px 13px;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .other-serv-grid h4 {
   font-size: 1.5em;
   font-weight: 400;
   margin: 0.5em 0em 0.5em 0em;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .other-serv-grid h4 a{
 	color: #d3bda5;
@@ -861,7 +861,7 @@ span.glyphicon.glyphicon-tree-deciduous {
   font-size: 3em;
   margin-bottom: 0.2em;
     color: #d3bda5;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 .gallery-top p {
   font-size: 1em;
@@ -915,7 +915,7 @@ h3.typo1 {
   text-align: center;
   font-size: 3em;
   color:#d3bda5;
-  font-family:"微软雅黑", cursive;
+  font-family:"MicrosoftYaHei", cursive;
 }
 /*--//typo--*/
 /*--contact--*/
@@ -925,7 +925,7 @@ h3.typo1 {
 }
 .contact-md h3{
 	 font-size:3em;
-    font-family:"微软雅黑", cursive;
+    font-family:"MicrosoftYaHei", cursive;
    color: #d3bda5;
 }
 .contact-md p {
@@ -940,7 +940,7 @@ h3.typo1 {
 	color: #000;
 	padding:0 0 1em;
 	margin: 0em;
-	font-family:"微软雅黑", cursive;
+	font-family:"MicrosoftYaHei", cursive;
 }
 .contact-top div{
 	padding:0.5em 0;
