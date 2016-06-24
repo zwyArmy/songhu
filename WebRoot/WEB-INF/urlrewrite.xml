@@ -10,24 +10,11 @@
 	  </rule>
 	  <rule>
 		<from>^/fore/([a-zA-Z0-9]+).html$</from>
-		<to type= "forward" >/fore/detail.jsp?id=$1</to>
+		<to type= "forward" >/fore/single.jsp?id=$1</to>
 	  </rule>	  
-	  <rule>
-		<from>^/fore/([a-z]+)_([0-9]+).html$</from>
-		<to type= "forward" >/fore/$1.jsp?columnId=$2</to>
-	  </rule>
-	  
-	   <rule>
-		<from>^/mobile/([a-z]+).html$</from>
-		<to type= "forward" >/mobile/$1.jsp</to>
-	  </rule>
-	  <rule>
-		<from>^/mobile/([a-zA-Z0-9]+).html$</from>
-		<to type= "forward" >/mobile/detail.jsp?id=$1</to>
-	  </rule>	  
-	  <rule>
-		<from>^/mobile/([a-z]+)_([0-9]+).html$</from>
-		<to type= "forward" >/mobile/$1.jsp?columnId=$2</to>
+      <rule>
+		<from>^/fore/([a-z]+),([0-9]+),([0-9]+).html$</from>
+		<to type= "forward" >/fore/$1.jsp?cumd=$2&amp;parentId=$3</to>
 	  </rule>
 </urlrewrite>
 

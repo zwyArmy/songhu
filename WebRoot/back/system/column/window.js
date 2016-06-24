@@ -6,7 +6,7 @@ Ext.onReady(function(){
 		title:"栏目信息",
 		id:"ext-win-column",
 		width:400,
-		height:350,
+		height:310,
 		modal:true,
 		closable:true,
 		resizable:false,
@@ -19,7 +19,7 @@ Ext.onReady(function(){
 					labelWidth:80,
 					labelAlign:"left",
 					layout:"form",
-					height:350,
+					height:310,
 					frame:true,
 					items:[
 						{
@@ -87,21 +87,15 @@ Ext.onReady(function(){
                        },
                        {
 							xtype:"textfield",
-							hidden:(this.parentId.substring(0,2)==10&&this.rl2==3)?false:true,
-							fieldLabel :(this.parentId.substring(0,2)==10&&this.rl2==3)?'一级类目代码':'',
+							hidden:true,
 							id:"lmdm1",
-							regex:/[0-9]{2,}/,
-							maxLength:2,
 							name:"lmdm1",
 							anchor : "98%"
 						},
 						{
 							xtype:"textfield",
-							fieldLabel :(this.parentId.substring(0,2)==10&&this.rl2==3)?'二级类目代码':'',
-							hidden:(this.parentId.substring(0,2)==10&&this.rl2==3)?false:true,
+							hidden:true,
 							id:"lmdm2",
-							regex:/[0-9]{2,}/,
-							maxLength:2,
 							name:"lmdm2",
 							anchor : "98%"
 						},

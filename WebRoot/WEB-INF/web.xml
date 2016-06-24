@@ -108,7 +108,7 @@
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
-  <!-- 测试配置 -->
+  <!-- ckeditor配置 -->
   <servlet>
 		<servlet-name>ConnectorServlet</servlet-name>
 		<servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>

@@ -96,4 +96,12 @@
 			type = #type#
 		</isNotEmpty>
 	</select>
+	<select id="findByType" resultMap="cmsXyrzResult"
+		parameterClass="java.lang.String">
+		select id, name, item_no, create_time, visits, description, state, author,
+		path
+		,type,'' type_name
+		from cms_xyrz
+		where type = #type#
+	</select>
 </sqlMap>

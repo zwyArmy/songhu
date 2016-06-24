@@ -21,7 +21,13 @@ public class StartOnLoadService {
 			parameterMap.put("webemail", webemail);
 			
 			String emailpwd = settingService.get("emailpwd").getValue();
-			parameterMap.put("emailpwd", emailpwd);			
+			parameterMap.put("emailpwd", emailpwd);		
+			
+			String webaddress = settingService.get("webaddress").getValue();
+			parameterMap.put("webaddress", webaddress);	
+			
+			String webphone = settingService.get("webphone").getValue();
+			parameterMap.put("webphone", webphone);
 			
 		}catch(Exception e){
 			
