@@ -1,37 +1,12 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" autoFlush="false" buffer="500kb" %>
-<%@page import="songhu.common.pojo.Column"%>
-<%@page import="com.weixin.core.util.StringUtil"%>
-<%@page import="songhu.util.StartOnLoadService"%>
-<jsp:useBean id="com" scope="page" class="songhu.common.bean.ArticleBean"
-	type="songhu.common.bean.ArticleBean"></jsp:useBean>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-String cumd = request.getParameter("cumd");
-if(StringUtil.isEmpty(cumd)){
-cumd = "0";
-}
-List<Column> listColumn = com.listColumnByParent(cumd);
-String columnId = "01";
-String webaddress = StartOnLoadService.parameterMap.get("webaddress");
-String webphone = StartOnLoadService.parameterMap.get("webphone");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>厦门嵩湖环保股份有限公司</title>
-<!-- start-smoth-scrolling -->
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script>
-	<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				$(".scroll").click(function(event){		
-					event.preventDefault();
-					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-				});
-			});
-	</script>
-<!-- //end-smoth-scrolling -->
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 <style type="text/css">
 body,td,th {
@@ -182,53 +157,7 @@ body,td,th {
 </div>
 <!--establish end here-->
 <!--footer start here-->
-<div class="footer">
-	<div class="container">
-		<div class="footer-main">
-				<div class="col-md-4 ftr-gd">
-					<h3>加入我们</h3>
-					<ul>
-						<li><a href="#" class="fa"> </a></li>
-						<li><a href="#" class="tw"> </a></li>
-						<li><a href="#" class="g"> </a></li>
-					</ul>
-				</div>
-				<div class="col-md-4 ftr-gd">
-					<h3>邮箱</h3>
-					<form>
-						<input  type="text" value="输入您的邮箱" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '输入您的邮箱';}">
-						<input type="submit" value="发送">
-					</form>
-				</div>
-				<div class="col-md-4 ftr-gd">
-					<h3>联系方式</h3>
-					<p>地址：<%=webaddress %></p>
-					<p>电话:<%=webphone %></p>
-				</div>
-			<div class="clearfix"> </div>
-		</div>
-		<div class="copyright">
-			   <p>© 2016 厦门嵩湖环保股份有限公司保留所有权力</p>
-		</div>
-		<script type="text/javascript">
-										$(document).ready(function() {
-											/*
-											var defaults = {
-									  			containerID: 'toTop', // fading element id
-												containerHoverID: 'toTopHover', // fading element hover id
-												scrollSpeed: 1200,
-												easingType: 'linear' 
-									 		};
-											*/
-											
-											$().UItoTop({ easingType: 'easeOutQuart' });
-											
-										});
-		</script>
-	   <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
-
-	</div>
-</div>
+<jsp:include  page="include/footer.jsp" flush="true" /> 
 <!--footer end here-->
 </body>
 </html>

@@ -7,15 +7,13 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 String cumd = request.getParameter("cumd");
+String parentId = request.getParameter("parentId");
 if(StringUtil.isEmpty(cumd)){
-cumd = "0";
+cumd = "01";
+parentId = "01";
 }
-List<Column> listColumn = com.listColumnByParent(cumd);
-String columnId = "01";
+List<Column> listColumn = com.listColumnByParent("0");
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.11.0.min.js"></script>
@@ -28,9 +26,31 @@ String columnId = "01";
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!--Google Fonts-->
-<script type="text/javascript"></script>
-</head>
-<body>
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+	</script>
+<!-- //end-smoth-scrolling -->
+<script type="text/javascript">
+    $(function () {
+    		//$('#nav-<%=parentId%>').show();
+            $('#nav-1 >li').mouseover(function () {
+                $('#nav-1 >li >a').each(function () {
+                 this.className = "";
+                }); 
+                $('#link_'+this.id).addClass('active');
+                $('.res-0').hide();
+                $('#nav-'+this.id).show();
+            });
+            });
+</script>
 <div class="container">
 		 <div class="header-main">
 		   <div class="logo">
@@ -39,13 +59,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="top-nav">
 					<span class="menu"> <img src="images/icon.png" alt=""/></span>
 				<nav class="cl-effect-1">
-					<ul class="res" id="index-nav">
-					<%for(int i=0;i<listColumn.size();i++){ %>
+					<ul class="res" id="nav-1">
+					<%for(int i=0;i<listColumn.size();i++){ 
+					%>
 					   <li id="<%=listColumn.get(i).getId()%>">
-					   <a href="<%=listColumn.get(i).getLink() %>" <%if(listColumn.get(i).getId().equals(columnId)) {%>class="active"<%} %>><%=listColumn.get(i).getColName() %></a>
+					   <a id="<%="link_"+listColumn.get(i).getId()%>" href="<%=listColumn.get(i).getLink() %>" <%if(listColumn.get(i).getId().equals(parentId)) {%>class="active"<%} %>><%=listColumn.get(i).getColName() %></a>
 					   </li> 
 					<%} %>
 				   </ul>
+				   <%for(int i=0;i<listColumn.size();i++){ 
+					List<Column> list2 = com.listColumnByParent(listColumn.get(i).getId());
+					if(list2.size()>0){
+					%>
+				    <ul class="res-0" id="nav-0<%=i+1%>" style="display:none;">
+					<%for(int j=0;j<list2.size();j++) {%>
+					   <li >
+					   <a href="<%=list2.get(j).getLink() %>" ><%=list2.get(j).getColName() %></a>
+					   </li> 
+					<%} %>
+				   </ul><%}else{ %>
+				    <ul class="res-0" id="nav-0<%=i+1%>" style="display:none;">
+				     <li >
+				     <a href="#" ></a>
+					 </li> 
+				    </ul>
+				   <%}} %>
 				 </nav>
 					<!-- script-for-menu -->
 						 <script>
@@ -60,5 +98,3 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 <div class="clearfix"> </div>
 		 </div>
   </div>
-</body>
-</html>
