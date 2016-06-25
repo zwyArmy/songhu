@@ -48,7 +48,6 @@
 					<p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id </p>				
 					<div class="map">
 					<jsp:include  page="include/map.jsp" flush="true" /> 
-						<!-- <iframe src="map.jsp"></iframe> -->
 					</div>
 				</div>
 			<div class="clearfix"> </div>
