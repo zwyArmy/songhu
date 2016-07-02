@@ -121,12 +121,13 @@ span.menu {
   display: inline-block;
 }
 .top-nav ul li a{
-	color: #fff;
-	text-decoration: none;
-	font-size: 1.05em;
-	padding:0.5em 0.5em;
-	position:relative;
-	z-index: 999;
+	color: #2A82C4;
+    text-decoration: none;
+    font-size: 1.05em;
+    padding: 0.5em 0.5em;
+    position: relative;
+    z-index: 999;
+    font-weight: 600;
 }
 .top-nav ul li a:hover,.top-nav ul li a.active{
 	color:#F9BC08;
@@ -135,7 +136,7 @@ span.menu {
 .banner {
 	min-height: 795px;
 	background-size: cover;
-	background-image: url(../images/shouye3.jpg);
+	background-image: url(../images/shouye.jpg);
 	background-repeat: no-repeat;
 }
 .banner-two {
@@ -342,7 +343,7 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
 /*--mission end here--*/
 /*--footer start here--*/
 .footer {
-  background: #000;
+  background: #2A82C4;
   padding: 4em 0em 4em 0em;
 }
 .ftr-gd h3 {
@@ -403,23 +404,23 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
   padding: 0.53em 0em;
   font-size: 1em;
   width: 25%;
-  background: #d3bda5;
+  background: #03AEDA;
   color: #fff;
   border: none;
   outline: none;
   vertical-align:top;
 }
-.ftr-gd input[type="submit"]:hover {
+/* .ftr-gd input[type="submit"]:hover {
 	background: #fff;
 	color: #000;
 	transition: 0.5s all;
   -webkit-transition: 0.5s all;
   -moz-transition: 0.5s all;
   -o-transition: 0.5s all;
-}
+} */
 .ftr-gd p {
   font-size: 1em;
-  color: #A5A5A5;
+  color: #000000;
   line-height: 1.8em;
 }
 .ftr-gd {
@@ -1002,7 +1003,8 @@ h3.typo1 {
   min-height: 740px;
 }
 .banner-bottom {
-  width: 22%;
+  /*width: 22%;*/
+  width: 60%;
 }
 }
 @media(max-width:1366px){

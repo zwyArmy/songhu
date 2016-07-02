@@ -72,10 +72,10 @@ body,td,th {
 <div class="plan">
 	<div class="container">
 		<div class="plan-main">
-			<div class="plan-top">
+<!-- 			<div class="plan-top">
 				<h3>成功上市</h3>
 				<p>提升规模效益、提升核心竞争力，打造产业特色，在发展壮大中实现社会价值，把嵩湖环保打造成有实力、信得过、有责任、敢担当的优秀企业。</p>
-			</div>
+			</div> -->
 			<div class="plan-bottom">
 				<div class="col-md-6 plan-left">
 					<a href="single.html"></a>
@@ -99,7 +99,7 @@ body,td,th {
 </div>
 <!--planing end here-->
 <!--our mission start here-->
-<div class="mission">
+<!-- <div class="mission">
 	<div class="container">
 		<div class="mission-main">
 			 <div class="col-md-6 mission-left">
@@ -154,7 +154,7 @@ body,td,th {
 			<div class="clearfix"> </div>
 		</div>
 	</div>
-</div>
+</div> -->
 <!--establish end here-->
 <!--footer start here-->
 <jsp:include  page="include/footer.jsp" flush="true" /> 

@@ -40,7 +40,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //end-smoth-scrolling -->
 <script type="text/javascript">
     $(function () {
-    		//$('#nav-<%=parentId%>').show();
+    <%if(cumd.equals("01")){%>
+    $('#nav-01').show();
+    <%}%>
             $('#nav-1 >li').mouseover(function () {
                 $('#nav-1 >li >a').each(function () {
                  this.className = "";
@@ -54,7 +56,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="container">
 		 <div class="header-main">
 		   <div class="logo">
-		     <h1><a href="index.html">嵩湖环保</a></h1>
+		     <h1><a href="index.html"><img src="images/logo.png" style="width:100px;"></a></h1>
 				</div>
 				<div class="top-nav">
 					<span class="menu"> <img src="images/icon.png" alt=""/></span>
@@ -71,16 +73,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					List<Column> list2 = com.listColumnByParent(listColumn.get(i).getId());
 					if(list2.size()>0){
 					%>
-				    <ul class="res-0" id="nav-0<%=i+1%>" style="display:none;">
+				    <ul class="res-0" id="nav-<%=listColumn.get(i).getId()%>" style="display:none;">
 					<%for(int j=0;j<list2.size();j++) {%>
 					   <li >
 					   <a href="<%=list2.get(j).getLink() %>" ><%=list2.get(j).getColName() %></a>
 					   </li> 
 					<%} %>
 				   </ul><%}else{ %>
-				    <ul class="res-0" id="nav-0<%=i+1%>" style="display:none;">
+				    <ul class="res-0" id="nav-<%=listColumn.get(i).getId()%>" style="display:none;">
 				     <li >
-				     <a href="#" ></a>
+				     <a href="javascript:void(0)" ></a>
 					 </li> 
 				    </ul>
 				   <%}} %>
