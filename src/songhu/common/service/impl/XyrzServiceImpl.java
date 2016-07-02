@@ -57,5 +57,14 @@ public class XyrzServiceImpl extends CommonServiceImpl implements XyrzService {
 		return page;
 		
 	}
-
+	@Override
+	public List<Xyrz> findByTypeList(String type, int limit) throws Exception {
+		QMap map = new QMap("type",type);
+		RowSelection row = new RowSelection();
+		row.setFirstRow(0);
+		row.setFetchSize(limit); 
+		List<Xyrz> list = this.getCommonDao().find(domain, "findByType",type,row);
+		return list;
+		
+	}
 }

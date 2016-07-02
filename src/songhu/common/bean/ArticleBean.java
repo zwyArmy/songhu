@@ -112,7 +112,21 @@ public class ArticleBean {
 		}
 		return null;
 	}
-	
+	public Article listByColumnId(String columnId) {
+		try {	
+			String cid = "'"+columnId.replaceAll(",", "','")+"'";			
+			QMap map = new QMap("columnId", cid);
+			RowSelection row = new RowSelection();
+			row.setFirstRow(0);
+			row.setFetchSize(1);			
+			List<Article> list = articleService.findByPaging(map, row);
+			if(null != list && list.size() > 0) return list.get(0);
+			return  null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public List<Article> listByColumnId(String columnId, int start, int limit) {
 		try {	
 			String cid = "'"+columnId.replaceAll(",", "','")+"'";			

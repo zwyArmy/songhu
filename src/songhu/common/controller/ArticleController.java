@@ -83,19 +83,21 @@ public class ArticleController extends BaseController {
 				String path = SystemPath.getSysPath();
 				String imgurl = Extool.getImageURL(article.getContent());
 				if (null != imgurl) {
+					imgurl = imgurl.substring(imgurl.indexOf("songhu")+6);
+
 					BufferedImage image1 = ImageIO
-							.read(new File(path + imgurl));
+							.read(new File(path , imgurl));
 					ImageScale is = new ImageScale();
-					BufferedImage image2 = is.imageZoomOut(image1, 250, 250);
+					BufferedImage image2 = is.imageZoomOut(image1, 360, 260);
 					String ext = FileUtils.getFileExtension(imgurl);
 					String filename = Extool.getRandName() + "." + ext;
 					ImageIO.write(image2, ext, new File(path
-							+ "userfiles/images/thumbs/" + filename));
+							, "userfiles/images/thumbs/" + filename));
 
 					// 首页幻灯片
 					BufferedImage image3 = is.imageZoomOut(image1, 331, 306);
 					ImageIO.write(image3, ext, new File(path
-							+ "userfiles/images/slide/" + filename));
+							, "userfiles/images/slide/" + filename));
 					article.setTnPath(filename);
 				}
 

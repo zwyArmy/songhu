@@ -19,12 +19,16 @@
 		<result column="WORD_PATH" property="wordPath" />
 		<result column="AUDITOR" property="auditor" />
 		<result column="FILENAME" property="filename" />
+		<result column="CONTENT" property="content" />
+		
 	</resultMap>
 	<resultMap id="cmsfindId" class="songhu.common.pojo.Article">
 		<result column="ID" property="id" />
 		<result column="TITLE" property="title" />
 		<result column="PUBLISH_TIME" property="publishTime" />
 		<result column="COLUMN_MC" property="columnMc" />
+		<result column="content" property="content" />
+		
 	</resultMap>
 	<resultMap id="crumbResult" class="songhu.common.pojo.Crumb">
 		<result column="COLUMN_ID" property="colId" />
@@ -140,7 +144,7 @@
 		parameterClass="java.util.Map">
 		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME,
 		AUDIT_TIME, CREATOR, IS_TOP, STATE,
-		VIEWS, ' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME
+		VIEWS, ' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME, CONTENT
 		from CMS_ARTICLE
 		where COLUMN_ID in ($columnId$)
 		and STATE = '1'
@@ -270,7 +274,7 @@
 	<select id="find" resultMap="cmsArticleResult" parameterClass="songhu.common.pojo.Article">
 		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME,
 		AUDIT_TIME, CREATOR, IS_TOP, STATE,VIEWS,' ' COLUMN_MC, SUMMARY,
-		TN_PATH, AUDITOR, WORD_PATH,FILENAME
+		TN_PATH, AUDITOR, WORD_PATH,FILENAME,CONTENT
 		from CMS_ARTICLE
 		where COLUMN_ID = #columnId#
 		<isNotEmpty prepend="and" property="title">
@@ -350,7 +354,7 @@
 		]]>
 	</select>
 	<select id="findId" resultMap="cmsfindId" parameterClass="java.lang.String">
-		SELECT a.id,a.TITLE TITLE,a.publish_time,b.col_name COLUMN_MC from
+		SELECT a.id,a.TITLE TITLE,a.publish_time,b.col_name COLUMN_MC ,a.content content from
 		cms_article a
 		LEFT JOIN cms_column b on a.column_id=b.id
 		where
