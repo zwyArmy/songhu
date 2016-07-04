@@ -79,28 +79,21 @@ public class ArticleController extends BaseController {
 		AjaxJson j = new AjaxJson();
 		try {
 			String msg = "";
-			if (isPhoto != null && isPhoto.equals("true")) {
+            //首页导航下面的图片新闻进行小图保存处理
+			if(article.getColumnId().equals("0403")){
 				String path = SystemPath.getSysPath();
 				String imgurl = Extool.getImageURL(article.getContent());
-				if (null != imgurl) {
-					imgurl = imgurl.substring(imgurl.indexOf("songhu")+6);
-
-					BufferedImage image1 = ImageIO
-							.read(new File(path , imgurl));
+				if(imgurl!=null){
+					imgurl.substring(imgurl.indexOf("songhu"));
+					imgurl = imgurl.substring(8, imgurl.length());
+					BufferedImage image1 = ImageIO.read(new File(path+imgurl));
 					ImageScale is = new ImageScale();
-					BufferedImage image2 = is.imageZoomOut(image1, 360, 260);
+					BufferedImage image2 = is.imageZoomOut(image1, 518, 345);
 					String ext = FileUtils.getFileExtension(imgurl);
-					String filename = Extool.getRandName() + "." + ext;
-					ImageIO.write(image2, ext, new File(path
-							, "userfiles/images/thumbs/" + filename));
-
-					// 首页幻灯片
-					BufferedImage image3 = is.imageZoomOut(image1, 331, 306);
-					ImageIO.write(image3, ext, new File(path
-							, "userfiles/images/slide/" + filename));
+					String filename = Extool.getRandName()+"."+ext;
+					ImageIO.write(image2, ext, new File(path,"userfiles/images/"+filename));
 					article.setTnPath(filename);
 				}
-
 			}
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			// 获得文件：
@@ -120,11 +113,11 @@ public class ArticleController extends BaseController {
 				}
 			}
 			User user = BaseController.getSessionUser();
+			article.setState("1");
 			if (cz.equals("1")) {// 新增
-				article.setState("1");
 				article.setCreator(user.getUserId());
-				article.setSummary(Tools.getTextFromHtml(article.getContent(),
-						200));
+			/*	article.setSummary(Tools.getTextFromHtml(article.getContent(),
+						200));*/
 				article.setWordPath(sjc);
 				msg = articleService.insert(article);
 				Article article2 = new Article();
@@ -142,8 +135,8 @@ public class ArticleController extends BaseController {
 					File old = new File(path2 + article.getWordPath());
 					old.delete();
 				}
-				article.setSummary(Tools.getTextFromHtml(article.getContent(),
-						200));
+			/*	article.setSummary(Tools.getTextFromHtml(article.getContent(),
+						200));*/
 				msg = articleService.updateBLOBs(article);
 				articleService.updateState(article.getId());
 			}

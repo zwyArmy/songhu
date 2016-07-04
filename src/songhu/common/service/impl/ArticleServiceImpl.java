@@ -335,4 +335,11 @@ public class ArticleServiceImpl extends CommonServiceImpl implements
 				map, row);
 		return list;
 	}
+
+	public List<Article> findByTop(String columnId, RowSelection row)
+			throws Exception {
+		List<Article> list = this.getCommonDao().find(domain, "findByTop", columnId,
+				row);
+		return list;
+	}
 }

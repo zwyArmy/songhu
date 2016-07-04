@@ -70,6 +70,7 @@ Ext.onReady(function(){
 					{name:'wordPath'},
 					{name:'views'},
 					{name:'auditTime'},
+					{name:'summary'},
 					{name:'auditor'}
 			]
 		}),
@@ -95,7 +96,6 @@ Ext.onReady(function(){
 			{header:"标题",width:30,hidden:false,sortable:true,dataIndex:'title',align:'left'},
 			{header:"创建人",width:8,sortable:true,dataIndex:'creator',algin:'left'},
 			{header:"创建时间",width:8,sortable:true,dataIndex:'createTime',algin:'center',renderer:function(val){return new Date(val).dateFormat('Y-m-d H:i');}},
-			{header:"发布时间",width:8,sortable:true,dataIndex:'publishTime',algin:'center',renderer:function(val){return new Date(val).dateFormat('Y-m-d H:i');}},
 			{header:"审核人员",width:8,sortable:true,dataIndex:'auditor',algin:'left',hidden: true},
 			{header:"审核时间",width:8,sortable:true,dataIndex:'auditTime',hidden: true,algin:'center',renderer:function(val){ return val==null?'':new Date(val).dateFormat('Y-m-d H:i');}},
 			{header:"状态",width:8,sortable:true,hidden: true,dataIndex:'state',algin:'left',renderer:function(val){
