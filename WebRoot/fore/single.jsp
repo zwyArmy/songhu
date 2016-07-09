@@ -27,6 +27,9 @@ Article get = com.getByArticleId(request.getParameter("id"));
 <!--single start here-->
 		 <div class="single">
 			<div class="container">
+ 			<div class="plan-top">
+				<h3><%=get.getTitle() %></h3>
+			</div> 
 			<%=get.getContent() %>
 				<div class="clearfix"> </div>
 			

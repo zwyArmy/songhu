@@ -136,11 +136,11 @@ span.menu {
 .banner {
 	min-height: 795px;
 	background-size: cover;
-	background-image: url(../images/shouye.jpg);
+	background-image: url(../images/shouye2.jpg);
 	background-repeat: no-repeat;
 }
 .banner-two {
-  background: url(../images/shouye.jpg)no-repeat;
+  background: url(../images/shouye2.jpg)no-repeat;
   min-height:160px;
   background-size: cover;
 }

@@ -67,7 +67,7 @@ body,td,th {
 				<p>提升规模效益、提升核心竞争力，打造产业特色，在发展壮大中实现社会价值，把嵩湖环保打造成有实力、信得过、有责任、敢担当的优秀企业。</p>
 			
 			</div> 
-			<img alt="" src="images/xinsanban.jpg" style="width:100%;">
+			<img alt="" src="images/DSC00213.png" style="width:100%;">
 		</div>
 	</div>
 </div>

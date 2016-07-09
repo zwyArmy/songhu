@@ -16,5 +16,10 @@
 		<from>^/fore/([a-z]+),([0-9]+),([0-9]+).html$</from>
 		<to type= "forward" >/fore/$1.jsp?cumd=$2&amp;parentId=$3</to>
 	  </rule>
+	  <!-- 文章分页 -->
+	  <rule>
+		<from>^/fore/([a-zA-Z0-9]+),([0-9]+),([0-9]+),([0-9]+).html$</from>
+		<to type= "forward" >/fore/$1.jsp?cumd=$2&amp;parentId=$3&amp;pages=$4</to>
+	  </rule>
 </urlrewrite>
 
