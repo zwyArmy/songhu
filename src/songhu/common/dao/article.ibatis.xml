@@ -511,13 +511,4 @@
 		set END_TIME = SYSDATE()
 		where TASK_ID = #taskId#
 	</update>
-	<select id="findByTop" resultMap="cmsArticleResult" parameterClass="java.lang.String">
-		select ID, TITLE, AUTHOR, COLUMN_ID, CREATE_TIME, PUBLISH_TIME,
-		AUDIT_TIME, CREATOR, IS_TOP, STATE,
-		VIEWS, ' ' COLUMN_MC, SUMMARY, TN_PATH, AUDITOR,WORD_PATH,FILENAME, '' CONTENT 
-		from CMS_ARTICLE
-		where COLUMN_ID = #columnId#
-		and STATE = '1' and IS_TOP = '0'
-		order by PUBLISH_TIME desc
-	</select>
 </sqlMap>

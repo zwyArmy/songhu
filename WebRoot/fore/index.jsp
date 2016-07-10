@@ -1,11 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" autoFlush="false" buffer="500kb" %>
-<%@page import="songhu.common.pojo.Article"%>
-<jsp:useBean id="com" scope="page" class="songhu.common.bean.ArticleBean"
-	type="songhu.common.bean.ArticleBean"></jsp:useBean>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-List<Article> banner = com.findByTop("0401", 0, 3);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,15 +22,27 @@ body,td,th {
 	  <section class="slider">
 		 <div class="flexslider">
 			<ul class="slides">
-			<%for(int i = 0;i < banner.size();i++){ %>
-			<li>
+			  <li>
 			  	<div class="banner-bottom">
-				 	<h2><%=banner.get(i).getTitle() %></h2>
-				 	<p><%=banner.get(i).getSummary() %></p>
-				 	<a href="<%=banner.get(i).getId() %>_0401.html">点击查看</a>
+				 	<h2>成功上市</h2>
+				 	<p>恭喜嵩湖环保在全国股份转让系统成功挂牌</p>
+				 	<a href="article.html?id=ca33&column_id=0801&parentId=04">点击查看</a>
 			 	</div>
 			  </li>
-			<%} %>
+			  <li>
+			 	<div class="banner-bottom">
+				 	<h2>了解嵩湖</h2>
+				 	<p>嵩湖环保,让生活更美好！</p>
+				 	<a href="aboutUs,02,0.html">点击查看</a>
+			 	</div>
+			  </li>
+			  <li>
+			 	<div class="banner-bottom">
+				 	<h2>选择我们</h2>
+				 	<p>卓越  丨  创新  丨  责任  丨  共赢 </p>
+				 	<a href="contact.html">点击查看</a>
+			 	</div>
+			  </li>
 		    </ul>
 		 </div>
 		 <div class="clearfix"> </div>
@@ -58,21 +66,19 @@ body,td,th {
 					});
 				  </script>
 			<!-- FlexSlider -->
+
+
 <!--planing strat here-->
 <div class="plan">
 	<div class="container">
 		<div class="plan-main">
-
- 			<div class="plan-top">
+			<div class="plan-top">
 				<h3>成功上市</h3>
 				<p>提升规模效益、提升核心竞争力，打造产业特色，在发展壮大中实现社会价值，把嵩湖环保打造成有实力、信得过、有责任、敢担当的优秀企业。</p>
+			</div>
+							<!-- 
 			
-			</div> 
-			<img alt="" src="images/DSC00213.png" style="width:100%;">
-		</div>
-	</div>
-</div>
-			<div class="plan-bottom">
+			<div class="plan-bottom" style="background:url(images/_Z7P8042.JPG ) no-repeat bottom" class="img-responsive">
 				<div class="col-md-6 plan-left">
 					<a href="single.html"></a>
 					<div class="plan-bot-text">
@@ -87,14 +93,18 @@ body,td,th {
 						<p>经过十余年的积累沉淀，公司由小变大、由弱变强，于2016年1月在全国中小企业股份转让系统成功挂</p>
 				    </div>
 				</div>
-			   <div class="clearfix"> </div>
-			</div>
+			   <div class="clearfix"> </div> 
+			</div>-->
 		   <div class="clearfix"> </div>
 		</div>
 	</div>
 </div>
+<div class="plan-bottom banner" style="    background: url(images/DSC00213.JPG ) no-repeat bottom;  background-size: cover;" class="img-responsive">
+</div>
 <!--planing end here-->
 <!--our mission start here-->
+<!-- 
+ 
 <div class="mission">
 	<div class="container">
 		<div class="mission-main">
@@ -151,8 +161,8 @@ body,td,th {
 		</div>
 	</div>
 </div>
+-->
 <!--establish end here-->
->>>>>>> parent of d32a033... 头部与尾部修改
 <!--footer start here-->
 <jsp:include  page="include/footer.jsp" flush="true" /> 
 <!--footer end here-->

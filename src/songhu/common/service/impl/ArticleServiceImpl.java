@@ -237,7 +237,7 @@ public class ArticleServiceImpl extends CommonServiceImpl implements
 	}
 
 	public void updateState(String articleId) throws Exception {
-		this.getCommonDao().delete(domain, "updateState", articleId);
+		this.getCommonDao().update(domain, "updateState", articleId);
 
 	}
 
@@ -333,13 +333,6 @@ public class ArticleServiceImpl extends CommonServiceImpl implements
 			throws Exception {
 		List<Article> list = this.getCommonDao().find(domain, "findByColumnId",
 				map, row);
-		return list;
-	}
-
-	public List<Article> findByTop(String columnId, RowSelection row)
-			throws Exception {
-		List<Article> list = this.getCommonDao().find(domain, "findByTop", columnId,
-				row);
 		return list;
 	}
 }

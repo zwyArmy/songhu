@@ -316,16 +316,4 @@ public class ArticleBean {
 		
         return sr;
 	}
-	
-	public List<Article> findByTop(String columnId,int start,int limit){
-		try{
-			RowSelection row = new RowSelection();
-			row.setFirstRow(start);
-			row.setFetchSize(limit);
-			return articleService.findByTop(columnId, row);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
 }

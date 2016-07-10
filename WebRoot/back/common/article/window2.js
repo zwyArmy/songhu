@@ -21,7 +21,7 @@ Ext.onReady(function() {
 				labelAlign : "right",
 				layout : "column",
 				fileUpload: true,
-				height : h,
+				height : h - 65,
 				frame : true,
 				items : [{
 					xtype : "hidden",
@@ -60,21 +60,6 @@ Ext.onReady(function() {
 						emptyText : ' ',
 						value : this.title,
 						name : "title",
-						emptyText : ' ',
-						anchor : "100%"
-					}]
-				}, {
-					layout : "form",
-					columnWidth : 1,
-					labelWidth : 55,
-					items : [{
-						xtype : "textfield",
-						fieldLabel : "概要",
-						itemCls : 'required-red',
-						id : "summary",
-						emptyText : ' ',
-						value : this.summary,
-						name : "summary",
 						emptyText : ' ',
 						anchor : "100%"
 					}]
@@ -145,7 +130,7 @@ Ext.onReady(function() {
 						itemCls : "required-red",
 						id : "content",
 						name : "content",
-						height : h - 350,
+						height : h - 340,
 						anchor : "98%"
 					}]
 				}, {
@@ -227,7 +212,7 @@ Ext.onReady(function() {
 					waitTitle : '文章加载',
 					success : function(form, action) {
 						CKEDITOR.instances["content"].document.getBody().setHtml(Ext.getCmp("content").getValue());
-						Ext.getCmp("state").setValue("0");
+						Ext.getCmp("state").setValue("1");
 						Ext.getCmp('publishTime').setValue(new Date(action.result.data.publishTime));
 					},
 					failure : function(form, action) {
@@ -240,7 +225,7 @@ Ext.onReady(function() {
 			CKEDITOR.config.readOnly = false;
 			var editor = CKEDITOR.instances['content'];   
 			if(editor) editor.destroy(true);
-			var contentCKE = CKEDITOR.replace('content', {toolbar : 'Full',width:'100%',height : h - 258}, {customConfig : '../../../resource/ckeditor/config.js'});
+			var contentCKE = CKEDITOR.replace('content', {toolbar : 'Full',width:'100%',height : h - 248}, {customConfig : '../../../resource/ckeditor/config.js'});
 			CKFinder.setupCKEditor(contentCKE,"../../../resource/ckfinder/");
 		}
 	});

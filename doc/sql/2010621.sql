@@ -14,3 +14,13 @@ CREATE TABLE `cms_xyrz` (
   `type_name` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*dev*/
+/*20160628修改菜单栏链接*/
+UPDATE `g_menu` SET `click`='common/cityDevelop/list.jsp' WHERE `bh_cd`='0301';
+UPDATE `g_menu` SET `click`='common/technicalService/list.jsp' WHERE `bh_cd`='0302';
+UPDATE `g_menu` SET `click`='common/productDevelope/list.jsp' WHERE `bh_cd`='0303';
+
+UPDATE `songhu`.`cms_column` SET `link`='' WHERE `id`='03';
+
+UPDATE `songhu`.`cms_column` SET `link`='municipalConstruction.html?column_id=0301&parentId=03' WHERE `id`='0301';
+UPDATE `songhu`.`cms_column` SET `link`='municipalConstruction.html?column_id=0302&parentId=03' WHERE `id`='0302';
+UPDATE `songhu`.`cms_column` SET `link`='municipalConstruction.html?column_id=0303&parentId=03' WHERE `id`='0303';

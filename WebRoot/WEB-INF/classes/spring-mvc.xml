@@ -119,6 +119,8 @@
       <value>spider.do</value>      
       <value>downloadController.do</value> 
       <value>mallUserController.do?insert</value> 
+      <value>articleController.do?find</value>
+      <value>articleController.do?get</value>
      </list>
     </property>
     </bean>

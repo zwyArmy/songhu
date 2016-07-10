@@ -9,17 +9,12 @@
 		<to type= "forward" >/fore/$1.jsp</to>
 	  </rule>
 	  <rule>
-		<from>^/fore/([a-zA-Z0-9]+)_([0-9]+).html$</from>
-		<to type= "forward" >/fore/single.jsp?id=$1&amp;cumd=$2</to>
+		<from>^/fore/([a-zA-Z0-9]+).html$</from>
+		<to type= "forward" >/fore/single.jsp?id=$1</to>
 	  </rule>	  
       <rule>
 		<from>^/fore/([a-z]+),([0-9]+),([0-9]+).html$</from>
 		<to type= "forward" >/fore/$1.jsp?cumd=$2&amp;parentId=$3</to>
-	  </rule>
-	  <!-- 文章分页 -->
-	  <rule>
-		<from>^/fore/([a-zA-Z0-9]+),([0-9]+),([0-9]+),([0-9]+).html$</from>
-		<to type= "forward" >/fore/$1.jsp?cumd=$2&amp;parentId=$3&amp;pages=$4</to>
 	  </rule>
 </urlrewrite>
 

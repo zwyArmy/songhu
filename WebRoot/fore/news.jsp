@@ -1,161 +1,127 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" autoFlush="false" buffer="500kb" %>
-<%@page import="songhu.common.pojo.Article"%>
+<%@page import="songhu.common.pojo.Xyrz"%>
 <%@page import="songhu.common.pojo.Column"%>
-<%@page import="com.weixin.core.util.DateUtils"%>
-<%@page import="com.weixin.core.util.Tools"%>
+<%@page import="songhu.common.pojo.Article"%>
+<%@page import="songhu.common.bean.ArticleBean"%>
+<%@page import="songhu.common.service.ArticleService"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" autoFlush="false" buffer="500kb" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>公司新闻</title>
+<link rel="stylesheet" href="css/animate.css" type="text/css">
+
+
 <jsp:useBean id="com" scope="page" class="songhu.common.bean.ArticleBean"
 	type="songhu.common.bean.ArticleBean"></jsp:useBean>
+
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 String cumd = request.getParameter("cumd");
-//分页
-int pagesize = 10;  //每页行数
-int pagecount = 0; //一共多少页
-String pagestmp = request.getParameter("pages");  //当前页
-pagestmp = pagestmp==null?"1":pagestmp;
-int pages = Integer.parseInt(pagestmp);
-int countnum = com.countByColumnId(cumd) ;  //栏目总行数
+String column_id = request.getParameter("column_id");
+String parentId = request.getParameter("parentId");
 
-if(countnum % pagesize == 0){
-	pagecount=countnum / pagesize;
-}else{
-	pagecount=countnum / pagesize+1;
-}
-List<Article> list = com.listByColumnId(cumd,(pages - 1) * pagesize,pagesize);
-List<Column> colList=com.listColumnByParent("04");
+//column_id=0301&parentId=03
 %>
-<!DOCTYPE HTML>
-<html>
-<head>
-<style type="text/css">
-.paginate {
-    margin-left: 100px;
-    background-color: #fff;
-    padding: 20px 0 10px 0;
-    text-align: center;
-    font-size: 12px;
-    float: left;
-}
-</style>
-<script type="text/javascript">
- var openWin = function(id){
- 	location.href = id+'_'+'<%=cumd%>'+'.html';
- }
-</script>
 </head>
-<body>
+<body class="backcolor">
 <!--banner start here-->
 <div class="banner-two">
-  <div class="header">
-	<div class="container">
-		 <div class="header-main">
-			 <jsp:include  page="include/top.jsp" flush="true" /> 
-		 </div>
-	  </div>
-	 </div>
+<div class="header">
+<jsp:include  page="include/top.jsp" flush="true" /> 
+</div>
  </div>
-<!--banner end here-->
 <!--single start here-->
-			 <div class="single">
+		 <div class="single">
 			<div class="container">
-					<div class="col-md-3 categories-grid">
-				<div class="grid-categories">
-					<h4>新闻</h4>
-					<ul class="popular ">
-					<%for(int i = 0;i < colList.size(); i++){ %>
-						<li><a href="news,<%=colList.get(i).getId() %>,0,1.html"><i class="glyphicon <%if(colList.get(i).getId().equals(cumd)){ %>glyphicon-ok<%}%>"> </i><%=colList.get(i).getColName() %></a></li>
-						<%} %>
-					</ul>
-				</div>
+			<div class="col-md-3 categories-grid">
+				<jsp:include  page="include/left.jsp" flush="true" /> 
+				
 			</div>
-			<div class="col-md-8 ">
-				<div class=" single-grid">
-				<div class="article-list">
-				<ul>
-				<%for(int i=0;i<list.size();i++){ 
-				String content = Tools.getTextFromHtml(list.get(i).getContent(),200);
-				if(content.length()>100){
-				content = content.substring(0,100)+"...";
-				}
-				%>
-			              <li style="list-style: none;">
-			              <font style="font-size: 18px;font-family: Microsoft&nbsp;JhengHei;"><a href="javascript:void(0);" onclick="openWin('<%=list.get(i).getId()%>');"><strong><%=list.get(i).getTitle() %></strong></a></font>
-			              </li>
-			              <li style="list-style: none;height: auto;"><font style="font-size: 12px;font-family: SimSun;">&nbsp;&nbsp;&nbsp;&nbsp;<%=content %>&nbsp;<a href="javascript:void(0);" onclick="openWin('<%=list.get(i).getId()%>');" style="color:#cd2a01; ">[详情]</a></font></li>
-			              <li style="list-style: none;height: auto;">
-			              <font style="color: #999;font-size: 12px;font-family: SimSun;"><%=DateUtils.date2Str(list.get(i).getCreateTime(), DateUtils.date_sdf) %></font>
-			              &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<font style="color: #db000;font-size: 12px;font-family: SimSun;"><%=list.get(i).getAuthor() %></font>
-			              </li>
-			              <br>
-			    <%} %>
-			      </ul>
-			    <div class="paginate" <%if(list.size()==0){ %>style="display:none;"<%} %>>
-				<span class="first">
-				<a href="news,<%=cumd %>,0,1.html">《 首页</a>
-				</span>
-				<%if(pages != 1){ %>
-				<span class="prev"><a href="news,<%=cumd %>,0,<%=pages-1 %>.html">《</a></span>
-				<%} %>
-					<%
-			 		  //起始页
-			 		  int beginnum = 1;
-			 		  //结束页
-			 		  int endnum = pagecount;
-			 		  
-			 		  //如果当前页大于2时，设置起始页为当前页减2
-			 		  //if(pages > 2){
-			 			//  beginnum = pages - 2;
-			 		  //}
-			 		  //如果当前页大于2时，设置起始页为当前页减2
-			 		  if((pages + 2) <= pagecount){
-			 			  endnum = pages + 2;
-			 		  }
-			 		  if(pagecount >=5 && endnum < 5){
-			 			  endnum = 5;
-			 		  }
-			 		  if(endnum < 5){
-			 			  beginnum = 1;
-			 		  }else if(endnum >= 5){
-			 			  beginnum = endnum - 4;
-			 		  }
-			 		  
-			 		  if(beginnum != 1){
-					%>
-					   <span class="active"><a href="news,<%=cumd %>,0,1.html">1...</a></span> 
-					<%
-			 		  }
-			 		  for(int i = beginnum;i <= endnum;i++ ){
-				 		  if(pages == i){
-			 		%>
-			 		<span class="active"><a href="news,<%=cumd %>,0,<%=i %>.html"><%=i %></a></span> 
-			 		<%
-				 		  }else{
-		 			%>
-			 		   <span ><a href="news,<%=cumd %>,0,<%=i %>.html"><%=i %></a></span> 
-			 		<%
-			 		    }
-			 		  }
-			 		  if(endnum != pagecount){
-					%>
-					<span ><a href="news,<%=cumd %>,0,<%=pagecount %>.html">...<%=pagecount %></a></span> 
-					<%
-			 		  }
-			 		  //当前页为最后页时不显示"下一页"
-			 		  if(pages != pagecount){
-			 		%>
-			 		        <span class="next"><a href="news,<%=cumd %>,0,<%=pages + 1 %>.html">》</a></span>
-			 		<% }%>
-				<span class="last"><a href="news,<%=cumd %>,0,<%=pagecount %>.html">尾页 》</a></span>
+			<div class="col-md-8 " id='container'>		
+				<div class=" single-profile"></div>
 				</div>
-				</div>
-				</div>
-			</div>
+			<div class="clearfix"> </div>
+			
 			</div>
 	</div>
+
 <!--//single end here-->
 <!--footer start here-->
+
 <jsp:include  page="include/footer.jsp" flush="true" /> 
 <!--footer end here-->
 </body>
+<link rel="stylesheet" type="text/css" href="css/style_common.css" />
+<link rel="stylesheet" type="text/css" href="css/style7.css" />
+<script src="js/juicer.js"></script>
+<script src="js/juicer.ext.js"></script>
+		<script type="text/html" id="templ">
+				<div class=" single-grid">
+					{@if root.length > 0}
+					<div class="divMainRight" style="margin-left: 100px; min-height: 600px;">
+						<div class="divModule20" style="margin-left: -220px;">
+						<div class="divModule20Content">
+						  <div class="divModule20Content1" id="divModule20Content1">
+							  <ul>
+									{@each root as item,k}
+									  <li style="list-style: none;">
+									  <font style="font-size: 18px;font-family: Microsoft&nbsp;JhengHei;"><a href="article.html?id=&&{item.id}&column_id=<%=column_id%>&parentId=<%=parentId%>" onclick=""><strong>&&{item.title}</strong></a></font>
+									  </li>
+									  <li style="list-style: none;height: auto;"><font style="font-size: 12px;font-family: SimSun;">&nbsp;&nbsp;&nbsp;&nbsp;&&{item.summary}...&nbsp;<a href="article.html?id=&&{item.id}&column_id=<%=column_id%>&parentId=<%=parentId%>"  style="color:#cd2a01; ">[详情]</a></font></li>
+									  <li style="list-style: none;height: auto;">
+									  <font style="color: #999;font-size: 12px;font-family: SimSun;">&&{item.createTime|dateFormat}</font>
+									  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<font style="color: #db000;font-size: 12px;font-family: SimSun;">&&{item.author}</font>
+									  </li>
+									  <br>
+									  <div class="divbottom"></div>
+									  {@/each}
+							  </ul>
+							</div>
+						  </div>
+						</div>
+					</div>
+					&&{page,totalProperty,pagecount,getlistFunc|pagingFun}
+					
+				{@else}
+				<div class="divMainRight" style="margin-left: 100px;">
+					<div class="divModule20" style="margin-left: -220px;"> 没有文章.</div>
+				</div>
+				{@/if}
+
+				</div>
+			
+		</script>
+<script type="text/javascript">
+/*{"total":"6","page":"1","getlistFunc":"getCurTask","pagecount":"9","list":[{"course_name":"会计基础（2016年新）","course_id":"0516084FAC1102FC00013332796649","coursetotal":"0","chaptertotal":"0"},{"course_name":"初级会计电算化（2016新）","course_id":"0515E4B6AC1102FC00013331176200","coursetotal":"0","chaptertotal":"0"},{"course_name":"财经法规与会计职业道德（2016年新）","course_id":"0515C4DEAC1102FC00013330212591","coursetotal":"0","chaptertotal":"0"},{"course_name":"初级会计电算化","course_id":"CDD2F1A3C0A80ACE00000001352695","coursetotal":"0","chaptertotal":"0"},{"course_name":"财经法规与会计职业道德","course_id":"CDDAFCA8C0A80ACE00000030863693","coursetotal":"0","chaptertotal":"0"},{"course_name":"会计基础","course_id":"CE066360C0A80ACE00000932324961","coursetotal":"0","chaptertotal":"0"}]}*/
+		$(document).ready(function() {
+
+			getCurList(1);
+			
+			
+		});
+		var pagecount = 5;
+		function getCurList(page){
+			 limit = (page) * pagecount;
+			 start = (page-1) * pagecount;
+	  	  	var url = "<%=basePath%>/articleController.do?find";
+	  	  	$.ajax({
+				url:url,
+				type:"POST",
+				data:{"limit":limit, "start":start,"columnId":"<%=column_id%>"},
+				async:false,
+				dataType:"json",
+				success:function(data){
+					var tmpl =$('#templ').html();
+			        var json = data;
+			        console.log(data);
+			        data.pagecount = pagecount;
+			        data.page = page;
+			        data.getlistFunc = "getCurList";
+					$("#container").html(juicer(tmpl,json));
+				}
+	  	  	});
+			
+	  	}
+</script>
 </html>

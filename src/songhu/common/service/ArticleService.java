@@ -72,8 +72,6 @@ public interface ArticleService {
 	List<Article> getByColumnId(String columnId) throws Exception;
 
 	Article findId(String columnId) throws Exception;
-	
-	List<Article> findByTop(String columnId,RowSelection row) throws Exception;
 
 	// 附件功能
 	Appendix getAppendix(String id) throws Exception;
