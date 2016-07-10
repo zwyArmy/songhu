@@ -121,13 +121,12 @@ span.menu {
   display: inline-block;
 }
 .top-nav ul li a{
-	color: #2A82C4;
-    text-decoration: none;
-    font-size: 1.05em;
-    padding: 0.5em 0.5em;
-    position: relative;
-    z-index: 999;
-    font-weight: 600;
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.05em;
+	padding:0.5em 0.5em;
+	position:relative;
+	z-index: 999;
 }
 .top-nav ul li a:hover,.top-nav ul li a.active{
 	color:#F9BC08;
@@ -343,7 +342,7 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
 /*--mission end here--*/
 /*--footer start here--*/
 .footer {
-  background: #2A82C4;
+  background: #000;
   padding: 4em 0em 4em 0em;
 }
 .ftr-gd h3 {
@@ -404,23 +403,23 @@ span.glyphicon.glyphicon-wrench.miss-wedo-icon{
   padding: 0.53em 0em;
   font-size: 1em;
   width: 25%;
-  background: #03AEDA;
+  background: #d3bda5;
   color: #fff;
   border: none;
   outline: none;
   vertical-align:top;
 }
-/* .ftr-gd input[type="submit"]:hover {
+.ftr-gd input[type="submit"]:hover {
 	background: #fff;
 	color: #000;
 	transition: 0.5s all;
   -webkit-transition: 0.5s all;
   -moz-transition: 0.5s all;
   -o-transition: 0.5s all;
-} */
+}
 .ftr-gd p {
   font-size: 1em;
-  color: #000000;
+  color: #A5A5A5;
   line-height: 1.8em;
 }
 .ftr-gd {
@@ -1003,8 +1002,7 @@ h3.typo1 {
   min-height: 740px;
 }
 .banner-bottom {
-  /*width: 22%;*/
-  width: 60%;
+  width: 22%;
 }
 }
 @media(max-width:1366px){
