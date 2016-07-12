@@ -41,7 +41,7 @@ Ext.onReady(function(){
         animate:true,
         containerScroll: true,
         root: new Ext.tree.AsyncTreeNode({
-	       	text:'泉州金融服务网',
+	       	text:'嵩湖环保服务网',
 	        draggable:false,
 	        expanded:true,
 	        id: '0'

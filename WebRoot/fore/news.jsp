@@ -1,19 +1,9 @@
-<%@page import="songhu.common.pojo.Xyrz"%>
-<%@page import="songhu.common.pojo.Column"%>
-<%@page import="songhu.common.pojo.Article"%>
-<%@page import="songhu.common.bean.ArticleBean"%>
-<%@page import="songhu.common.service.ArticleService"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" autoFlush="false" buffer="500kb" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>公司新闻</title>
 <link rel="stylesheet" href="css/animate.css" type="text/css">
-
-
-<jsp:useBean id="com" scope="page" class="songhu.common.bean.ArticleBean"
-	type="songhu.common.bean.ArticleBean"></jsp:useBean>
-
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -108,7 +98,7 @@ String parentId = request.getParameter("parentId");
 	  	  	$.ajax({
 				url:url,
 				type:"POST",
-				data:{"limit":limit, "start":start,"columnId":"<%=column_id%>"},
+				data:{"limit":limit, "start":start,"columnId":"<%=cumd%>"},
 				async:false,
 				dataType:"json",
 				success:function(data){

@@ -40,7 +40,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //end-smoth-scrolling -->
 <script type="text/javascript">
     $(function () {
-    		//$('#nav-<%=parentId%>').show();
+    <%if(cumd.equals("01")){%>
+    $('#nav-01').show();
+    <%}%>
             $('#nav-1 >li').mouseover(function () {
                 $('#nav-1 >li >a').each(function () {
                  this.className = "";
@@ -62,33 +64,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<ul class="res" id="nav-1">
 					<%for(int i=0;i<listColumn.size();i++){ 
 					%>
-					   <li class="relative" id="<%=listColumn.get(i).getId()%>">
-					   	<a id="<%="link_"+listColumn.get(i).getId()%>" href="<%=listColumn.get(i).getLink() %>" <%if(listColumn.get(i).getId().equals(parentId)) {%>class="active"<%} %>><%=listColumn.get(i).getColName() %></a>
-							<%
-							List<Column> list2 = com.listColumnByParent(listColumn.get(i).getId());
-							if(list2.size()>0){
-							%>
-						    <ul class="res-0" id="nav-<%=listColumn.get(i).getId()%>" style="display:none; position:absolution;">
-							<%for(int j=0;j<list2.size();j++) {%>
-							   <li >
-							   <a href="<%=list2.get(j).getLink() %>" ><%=list2.get(j).getColName() %></a>
-							   </li> 
-							<%} %>
-						   </ul><%}else{ %>
-						    <ul class="res-0" id="nav-<%=listColumn.get(i).getId()%>"  style="display:none;    ">
-						     <li >
-						     <a href="#" ></a>
-							 </li> 
-						    </ul>
-						   <%} %>
-					   
+					   <li id="<%=listColumn.get(i).getId()%>">
+					   <a id="<%="link_"+listColumn.get(i).getId()%>" href="<%=listColumn.get(i).getLink() %>" <%if(listColumn.get(i).getId().equals(parentId)) {%>class="active"<%} %>><%=listColumn.get(i).getColName() %></a>
 					   </li> 
-					   
-					   
-					   
 					<%} %>
 				   </ul>
-				   
+				   <%for(int i=0;i<listColumn.size();i++){ 
+					List<Column> list2 = com.listColumnByParent(listColumn.get(i).getId());
+					if(list2.size()>0){
+					%>
+				    <ul class="res-0" id="nav-<%=listColumn.get(i).getId()%>" style="display:none;">
+					<%for(int j=0;j<list2.size();j++) {%>
+					   <li >
+					   <a href="<%=list2.get(j).getLink() %>" ><%=list2.get(j).getColName() %></a>
+					   </li> 
+					<%} %>
+				   </ul><%}else{ %>
+				    <ul class="res-0" id="nav-<%=listColumn.get(i).getId()%>" style="display:none;">
+				     <li >
+				     <a href="javascript:void(0)" ></a>
+					 </li> 
+				    </ul>
+				   <%}} %>
 				 </nav>
 					<!-- script-for-menu -->
 						 <script>
@@ -103,6 +100,3 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 <div class="clearfix"> </div>
 		 </div>
   </div>
-  <script>
-  if(!console.log) console.log = function(){};
-  </script>
